@@ -8,7 +8,7 @@ app.use("/", (req,res,next) => {
     res.send("It is working");
 })
 
-mongoose.connect("mongodb://localhost:27017/Sentinel")
+mongoose.connect("mongodb+srv://admin:XpXTg7Ug9g5wPdW9@ispm.5egix08.mongodb.net/")
 .then(() => console.log("Connected to MongoDB"))
 .then(() => {
     app.listen(5000);
