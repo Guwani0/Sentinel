@@ -1,8 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@600;700&display=swap');
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  background-color: #000000; /* Black background */
+  color: white;
+  font-family: 'Inter', sans-serif; /* Default body font */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -10,4 +12,34 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: 'Poppins', sans-serif; /* Headings use Poppins */
+}
+
+/* === Accent Colors & Utilities === */
+.accent-purple {
+  color: #8A00C4; /* Purple text */
+}
+
+.bg-purple {
+  background-color: #8A00C4; /* Purple background */
+  color: white; /* Default text white for contrast */
+}
+
+.btn-purple {
+  background-color: #8A00C4;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.btn-purple:hover {
+  background-color: #6c009c; /* Darker purple on hover */
 }
