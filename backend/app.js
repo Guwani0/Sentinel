@@ -1,12 +1,14 @@
 const express = require("express");
-const mongoose = require ("mongoose");
+const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const cors = require("cors"); // 👈 add this
 const authRoutes = require("./Routes/authRoutes");
 
 dotenv.config();
 const app = express();
 
 // Middleware
+app.use(cors({ origin: "http://localhost:3000" })); // 👈 allow frontend
 app.use(express.json());
 
 // Routes
@@ -18,7 +20,7 @@ mongoose.connect(process.env.MONGO_URI, {
   useUnifiedTopology: true,
 })
 .then(() => {
-  console.log("Connected to MongoDB");
-  app.listen(5000, () => console.log("Server running on port 5000"));
+  console.log("✅ Connected to MongoDB Atlas");
+  app.listen(5000, () => console.log("🚀 Server running on port 5000"));
 })
-.catch((err) => console.log(err));
+.catch((err) => console.error("❌ DB Connection Error:", err));

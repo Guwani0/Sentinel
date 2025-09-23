@@ -1,4 +1,3 @@
-//hash.js
 import bcrypt from "bcryptjs";
 
 async function generateHashes() {
