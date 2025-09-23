@@ -12,7 +12,7 @@ async function seedUsers() {
     console.log("Connected to MongoDB");
 
     const users = [
-      { username: "Silva-ADM-001", password: "SilvaADM@123", role: "admin", name: "Silva Admin", email: "silva@admin.com" },
+      { username: "Silva-ADM-001", password: "SilvaADM@123", role: "admin", name: "Silva Admin", email: "jinuka.markperera@gmail.com" },
       { username: "PERERA-SECOPS-001", password: "PereraOfficer@123", role: "security", name: "Perera Officer", email: "perera@security.com" },
       { username: "Fernando-IT-001", password: "FernandoIT@123", role: "employee", name: "Fernando IT", email: "fernando@it.com" },
     ];
