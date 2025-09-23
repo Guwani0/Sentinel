@@ -14,3 +14,4 @@ mongoose.connect("mongodb+srv://admin:XpXTg7Ug9g5wPdW9@ispm.5egix08.mongodb.net/
     app.listen(5000);
 })
 .catch((err) => console.log((err)));
+
