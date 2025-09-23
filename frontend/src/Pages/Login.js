@@ -4,10 +4,13 @@ import { useNavigate } from "react-router-dom";
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [otp, setOtp] = useState("");
+  const [userId, setUserId] = useState("");
+  const [step, setStep] = useState("login");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
@@ -26,6 +29,34 @@ function Login() {
         return;
       }
 
+      setUserId(data.userId);
+      setStep("otp");
+    } catch (err) {
+      console.error(err);
+      alert("Login failed. Please try again.");
+      setLoading(false);
+    }
+  };
+
+  const handleOtpSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const res = await fetch("http://localhost:5000/api/auth/verify-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId, otp }),
+      });
+
+      const data = await res.json();
+      setLoading(false);
+
+      if (!res.ok) {
+        alert(data.message || "Invalid OTP");
+        return;
+      }
+
       // Save JWT + user info
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
@@ -36,7 +67,7 @@ function Login() {
       else if (data.user.role === "employee") navigate("/employee");
     } catch (err) {
       console.error(err);
-      alert("Login failed. Please try again.");
+      alert("Verification failed. Please try again.");
       setLoading(false);
     }
   };
@@ -59,39 +90,63 @@ function Login() {
           <h2>Login</h2>
           <p className="subtitle">Enter your credentials to access your account</p>
 
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label>Username</label>
-              <input
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                placeholder="Enter Username"
-                required
-              />
-            </div>
+          <form onSubmit={step === 'login' ? handleLoginSubmit : handleOtpSubmit}>
+            {step === 'login' ? (
+              <>
+                <div className="form-group">
+                  <label>Username</label>
+                  <input
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    placeholder="Enter Username"
+                    required
+                  />
+                </div>
 
-            <div className="form-group">
-              <label>Password</label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter Password"
-                required
-              />
-            </div>
+                <div className="form-group">
+                  <label>Password</label>
+                  <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Enter Password"
+                    required
+                  />
+                </div>
 
-            <div className="form-options">
-              <label>
-                <input type="checkbox" /> Remember me
-              </label>
-              <a href="#" className="forgot-link">Forgot password?</a>
-            </div>
+                <div className="form-options">
+                  <label>
+                    <input type="checkbox" /> Remember me
+                  </label>
+                  <a href="#" className="forgot-link">Forgot password?</a>
+                </div>
 
-            <button type="submit" className="login-btn" disabled={loading}>
-              {loading ? "Logging in..." : "Login"}
-            </button>
+                <button type="submit" className="login-btn" disabled={loading}>
+                  {loading ? "Logging in..." : "Login"}
+                </button>
+              </>
+            ) : (
+              <>
+                <div className="form-group">
+                  <label>Enter OTP</label>
+                  <input
+                    type="text"
+                    value={otp}
+                    onChange={(e) => setOtp(e.target.value)}
+                    placeholder="Enter 6-digit OTP"
+                    required
+                  />
+                </div>
+
+                <button type="submit" className="login-btn" disabled={loading}>
+                  {loading ? "Verifying..." : "Verify OTP"}
+                </button>
+                <button type="button" onClick={() => setStep('login')} className="back-btn">
+                  Back to Login
+                </button>
+              </>
+            )}
           </form>
         </div>
       </div>
