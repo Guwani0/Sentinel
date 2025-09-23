@@ -4,34 +4,51 @@ import { useNavigate } from "react-router-dom";
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  // Dummy hardcoded credentials for now
-  const users = {
-    "ADM-IT-001": { password: "admin123", role: "admin" },
-    "SEC-IT-001": { password: "sec123", role: "security" },
-    "EMP-IT-001": { password: "emp123", role: "employee" },
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
-    if (users[username] && users[username].password === password) {
-      const role = users[username].role;
-      if (role === "admin") navigate("/admin");
-      else if (role === "security") navigate("/security");
-      else if (role === "employee") navigate("/employee");
-    } else {
-      alert("Invalid username or password");
+    try {
+      const res = await fetch("http://localhost:5000/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const data = await res.json();
+      setLoading(false);
+
+      if (!res.ok) {
+        alert(data.message || "Invalid credentials");
+        return;
+      }
+
+      // Save JWT + user info
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+
+      // Redirect based on role
+      if (data.user.role === "admin") navigate("/admin");
+      else if (data.user.role === "security") navigate("/security");
+      else if (data.user.role === "employee") navigate("/employee");
+    } catch (err) {
+      console.error(err);
+      alert("Login failed. Please try again.");
+      setLoading(false);
     }
   };
 
   return (
     <div className="login-wrapper">
-      {/* Left Side with gradient / logo / tagline */}
+      {/* Left Side with gradient / tagline */}
       <div className="login-left">
         <div className="overlay">
-          <h1>Be a Part of <br /> Something <span>Secure</span></h1>
+          <h1>
+            Discipline in Access, <br /> Strength in <span>Security</span>
+          </h1>
           <p>Sentinel — Security Awareness & Policy Compliance</p>
         </div>
       </div>
@@ -72,12 +89,10 @@ function Login() {
               <a href="#" className="forgot-link">Forgot password?</a>
             </div>
 
-            <button type="submit" className="login-btn">Login</button>
+            <button type="submit" className="login-btn" disabled={loading}>
+              {loading ? "Logging in..." : "Login"}
+            </button>
           </form>
-
-          <p className="signup-text">
-            Not a member? <a href="#">Create an account</a>
-          </p>
         </div>
       </div>
 
@@ -206,25 +221,14 @@ function Login() {
           box-shadow: 0 0 15px rgba(113, 27, 181, 0.6);
         }
 
-        .login-btn:hover {
+        .login-btn:hover:enabled {
           background: #8c33d9;
           box-shadow: 0 0 25px rgba(113, 27, 181, 0.9);
         }
 
-        .signup-text {
-          text-align: center;
-          margin-top: 1.5rem;
-          font-size: 0.85rem;
-          color: #bbb;
-        }
-
-        .signup-text a {
-          color: #ff4dff;
-          text-decoration: none;
-        }
-
-        .signup-text a:hover {
-          text-decoration: underline;
+        .login-btn:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
         }
       `}</style>
     </div>
