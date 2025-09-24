@@ -87,12 +87,16 @@ function Login() {
       {/* Right Side with login form */}
       <div className="login-right">
         <div className="login-form">
-          <h2>Login</h2>
-          <p className="subtitle">Enter your credentials to access your account</p>
-
-          <form onSubmit={step === 'login' ? handleLoginSubmit : handleOtpSubmit}>
-            {step === 'login' ? (
+          <form
+            onSubmit={step === "login" ? handleLoginSubmit : handleOtpSubmit}
+          >
+            {step === "login" ? (
               <>
+                <h2>Login</h2>
+                <p className="subtitle">
+                  Enter your credentials to access your account
+                </p>
+
                 <div className="form-group">
                   <label>Username</label>
                   <input
@@ -119,7 +123,9 @@ function Login() {
                   <label>
                     <input type="checkbox" /> Remember me
                   </label>
-                  <a href="#" className="forgot-link">Forgot password?</a>
+                  <a href="#" className="forgot-link">
+                    Forgot password?
+                  </a>
                 </div>
 
                 <button type="submit" className="login-btn" disabled={loading}>
@@ -128,6 +134,11 @@ function Login() {
               </>
             ) : (
               <>
+                <h2>OTP Verification</h2>
+                <p className="subtitle">
+                  Enter the 6-digit verification code that was sent to your
+                  email.{" "}
+                </p>
                 <div className="form-group">
                   <label>Enter OTP</label>
                   <input
@@ -137,15 +148,24 @@ function Login() {
                     placeholder="Enter 6-digit OTP"
                     required
                   />
+                  
                 </div>
 
                 <button type="submit" className="login-btn" disabled={loading}>
                   {loading ? "Verifying..." : "Verify OTP"}
                 </button>
-                <hr />
-                <button type="button" onClick={() => setStep('login')} className="back-btn">
+                <button
+                  type="button"
+                  onClick={() => setStep("login")}
+                  className="back-btn"
+                >
                   Back to Login
                 </button>
+
+                <br /> <br/> 
+                <p className="resend-text">
+                Didn’t receive the code? <span className="resend-highlight">Resend</span>
+                </p>
               </>
             )}
           </form>
@@ -231,7 +251,8 @@ function Login() {
 
         .form-group input {
           width: 100%;
-          padding: 10px;
+          padding: 12px;
+          box-sizing: border-box;
           border: 1px solid #444;
           border-radius: 8px;
           background: #222;
@@ -286,29 +307,49 @@ function Login() {
           opacity: 0.6;
           cursor: not-allowed;
         }
-          .back-btn {
+        
+        .back-btn {
+          margin-top: 10px;
           width: 100%;
-          background: #711bb5;
-          color: #fff;
-          padding: 12px;
-          border: none;
+          background: transparent;
+          color: #bbb;
+          padding: 10px;
+          border: 1px solid #444;
           border-radius: 8px;
-          font-size: 1rem;
-          font-weight: bold;
+          font-size: 0.9rem;
+          font-weight: 500;
           cursor: pointer;
           transition: all 0.3s ease;
-          box-shadow: 0 0 15px rgba(113, 27, 181, 0.6);
         }
 
-        .back-btn:hover:enabled {
-          background: #8c33d9;
-          box-shadow: 0 0 25px rgba(113, 27, 181, 0.9);
+          padding: 10px;
+          border: 1px solid #444;
+          border-radius: 8px;
+          font-size: 0.9rem;
+          font-weight: 500;
+          cursor: pointer;
+          transition: all 0.3s ease;
         }
 
-        .back-btn:disabled {
-          opacity: 0.6;
-          cursor: not-allowed;
+          .back-btn:hover {
+          background: #222;
+          color: #fff;
+          border-color: #711bb5;
+          box-shadow: 0 0 10px rgba(113, 27, 181, 0.5);
         }
+
+        .resend-text {
+        margin-top: 8px;
+        font-size: 0.85rem;
+        color: #aaa;
+}
+
+.resend-highlight {
+  color: #711bb5; /* purple */
+  font-weight: 600;
+}
+
+
       `}</style>
     </div>
   );
