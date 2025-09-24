@@ -7,6 +7,8 @@ import Security from "./Pages/Security.js";
 import Employee from "./Pages/Employee.js";
 import SATDashboardPage from "./Pages/SATDashboard.js";
 import SATModulePage from "./Pages/SATModulePage";
+import IncidentReportingPage from "./Pages/IncidentReportingPage.js";
+import ReportSuccessPage from "./Pages/ReportSuccessPage.js";
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
       <Route path="/employee" element={<Employee />} />
       <Route path="/satdashboard" element={<SATDashboardPage />} />
       <Route path="/satmodule" element={<SATModulePage />} />
+      <Route path="/incident" element={<IncidentReportingPage />} />
+      <Route path="/success" element={<ReportSuccessPage />} />
     </Routes>
   );
 }
