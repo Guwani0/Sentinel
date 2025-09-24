@@ -7,6 +7,12 @@ import Security from "./Pages/Security.js";
 import Employee from "./Pages/Employee.js";
 import SATDashboardPage from "./Pages/SATDashboard.js";
 import SATModulePage from "./Pages/SATModulePage";
+import SATPP from "./Pages/SATPP.js";
+import SATPPVideos from "./Pages/SATPPVideos";
+import SATPPInfographics from "./Pages/SATPPInfographics";
+import SATPPSlides from "./Pages/SATPPSlides";
+import SATPPQuizInfo from "./Pages/SATPPQuizInfo"; 
+import SATPPQuiz from "./Pages/SATPPQuiz"; 
 
 function App() {
   return (
@@ -18,6 +24,12 @@ function App() {
       <Route path="/employee" element={<Employee />} />
       <Route path="/satdashboard" element={<SATDashboardPage />} />
       <Route path="/satmodule" element={<SATModulePage />} />
+      <Route path="/satpp" element={<SATPP />} />
+      <Route path="/satpp/videos" element={<SATPPVideos />} />
+      <Route path="/satpp/infographics" element={<SATPPInfographics />} />
+      <Route path="/satpp/slides" element={<SATPPSlides />} />
+      <Route path="/satpp/quiz" element={<SATPPQuizInfo />} /> 
+      <Route path="/satpp/quiz/start" element={<SATPPQuiz />} /> 
     </Routes>
   );
 }
