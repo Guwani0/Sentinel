@@ -33,11 +33,53 @@ exports.loginUser = async (req, res) => {
     });
 
     const mailOptions = {
-      from: process.env.GMAIL_USER,
-      to: user.email,
-      subject: "Your OTP for Login",
-      text: `Your OTP is ${otp}. It expires in 10 minutes.`,
-    };
+  from: process.env.GMAIL_USER,
+  to: user.email,
+  subject: "Sentinel One Time Password (OTP) Verification",
+  html: `
+  <div style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 30px;">
+    <div style="max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+      
+      <!-- Header -->
+      <div style="background: #3a0044; padding: 20px; text-align: center; color: #ffffff;">
+        <h2 style="margin: 0; font-size: 20px;">Sentinel One Time Password (OTP) Verification</h2>
+      </div>
+
+      <!-- Body -->
+      <div style="padding: 30px; color: #000000;">
+        <p style="color:#000000; margin:0;" >Dear User,</p>
+        <p style="color:#000000; margin:0;" >Your one-time password (OTP) for <strong>Sentinel</strong> is:</p>
+        
+        <div style="text-align: center; margin: 30px 0;">
+          <span style="display: inline-block; background: #3a0044; color: #ffffff; padding: 12px 24px; border-radius: 6px; font-size: 24px; font-weight: bold; letter-spacing: 3px;">
+            ${otp}
+          </span>
+        </div>
+
+        <p style="color:#000000; margin:0;" >This code is valid for the next <strong>10 minutes</strong>. It can only be used once.</p>
+        <p style="color:#000000; margin:0;" >If you did not request this code, please ignore this email and contact support immediately at 
+          <a href="mailto:support@sentinel.lk">support@sentinel.lk</a>.
+        </p>
+        <br/>
+        <p style="color:#000000; margin:0;" >Regards,<br/>Sentinel<br/>Sri Lanka Army</p>
+      </div>
+
+      <!-- Footer -->
+      <div style="background: #f1f5f9; text-align: center; padding: 10px; font-size: 12px; color: #6b7280;">
+        © www.sentinel.lk
+      </div>
+    </div>
+  </div>
+  `
+};
+
+
+    // const mailOptions = {
+    //   from: process.env.GMAIL_USER,
+    //   to: user.email,
+    //   subject: "Your OTP for Login",
+    //   text: `Your OTP is ${otp}. It expires in 10 minutes.`,
+    // };
 
     await transporter.sendMail(mailOptions);
 

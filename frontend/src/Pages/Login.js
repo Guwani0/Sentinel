@@ -142,6 +142,7 @@ function Login() {
                 <button type="submit" className="login-btn" disabled={loading}>
                   {loading ? "Verifying..." : "Verify OTP"}
                 </button>
+                <hr />
                 <button type="button" onClick={() => setStep('login')} className="back-btn">
                   Back to Login
                 </button>
@@ -282,6 +283,29 @@ function Login() {
         }
 
         .login-btn:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+          .back-btn {
+          width: 100%;
+          background: #711bb5;
+          color: #fff;
+          padding: 12px;
+          border: none;
+          border-radius: 8px;
+          font-size: 1rem;
+          font-weight: bold;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          box-shadow: 0 0 15px rgba(113, 27, 181, 0.6);
+        }
+
+        .back-btn:hover:enabled {
+          background: #8c33d9;
+          box-shadow: 0 0 25px rgba(113, 27, 181, 0.9);
+        }
+
+        .back-btn:disabled {
           opacity: 0.6;
           cursor: not-allowed;
         }
