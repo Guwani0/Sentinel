@@ -17,11 +17,6 @@ export default function CTDPage1() {
     { name: "Completed", value: 1168 },
     { name: "Not Completed", value: 332 },
   ];
-  const departmentData = [
-    { dept: "HR", policy: 60, training: 55 },
-    { dept: "Sales", policy: 75, training: 70 },
-    { dept: "Engineering", policy: 85, training: 80 },
-  ];
   const trendData = [
     { month: "July", compliance: 40 },
     { month: "Sept", compliance: 58 },
@@ -29,8 +24,13 @@ export default function CTDPage1() {
     { month: "Nov", compliance: 70 },
     { month: "Dec", compliance: 82 },
   ];
+  const incidentSeverity = [
+    { name: "High", value: 30 },
+    { name: "Medium", value: 50 },
+    { name: "Low", value: 90 },
+  ];
 
-  const COLORS = ["#711bb5", "#444"];
+  const COLORS = ["#711bb5", "#ffaa00", "#ff4d4d"];
 
   // ✅ Export Excel
   const exportExcel = (data, title) => {
@@ -57,7 +57,19 @@ export default function CTDPage1() {
     transition: "all 0.3s ease",
   };
 
-  const buttonStyle = {
+  const buttonPrimary = {
+    backgroundColor: "#007bff",
+    color: "#fff",
+    border: "none",
+    borderRadius: "8px",
+    padding: "8px 14px",
+    cursor: "pointer",
+    fontSize: "13px",
+    fontFamily: "Poppins, sans-serif",
+    transition: "0.3s ease",
+  };
+
+  const buttonSecondary = {
     backgroundColor: "#711bb5",
     color: "#fff",
     border: "none",
@@ -66,7 +78,6 @@ export default function CTDPage1() {
     cursor: "pointer",
     fontSize: "13px",
     fontFamily: "Poppins, sans-serif",
-    marginLeft: "6px",
     transition: "0.3s ease",
   };
 
@@ -175,18 +186,32 @@ export default function CTDPage1() {
 
         {/* Middle Column */}
         <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-          {/* Department Stats */}
+          {/* Incident Severity Breakdown */}
           <div style={cardStyle}>
-            <h3 style={{ fontFamily: "Poppins", color: "#fff" }}>Policy & Training Completion by Department</h3>
-            <BarChart width={500} height={250} data={departmentData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#444" />
-              <XAxis dataKey="dept" stroke="#fff" />
-              <YAxis stroke="#fff" />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="policy" fill="#711bb5" />
-              <Bar dataKey="training" fill="#444" />
-            </BarChart>
+            <h3 style={{ fontFamily: "Poppins", color: "#fff", marginBottom: "15px" }}>
+              Incident Severity Breakdown
+            </h3>
+            <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+              <PieChart width={220} height={220}>
+                <Pie
+                  data={incidentSeverity}
+                  dataKey="value"
+                  innerRadius={55}
+                  outerRadius={85}
+                  paddingAngle={4}
+                >
+                  {incidentSeverity.map((entry, index) => (
+                    <Cell key={index} fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Pie>
+                <Tooltip />
+              </PieChart>
+            </div>
+            <div style={{ display: "flex", justifyContent: "space-around", marginTop: "10px" }}>
+              <span style={{ color: "#ff4d4d", fontWeight: "600" }}>High</span>
+              <span style={{ color: "#ffaa00", fontWeight: "600" }}>Medium</span>
+              <span style={{ color: "#711bb5", fontWeight: "600" }}>Low</span>
+            </div>
           </div>
 
           {/* Compliance Trend */}
@@ -209,28 +234,66 @@ export default function CTDPage1() {
           <div style={cardStyle}>
             <h3 style={{ fontFamily: "Poppins", color: "#fff" }}>Compliance Reports</h3>
             <p>Q4 2024 Policy Report
-              <button style={buttonStyle} onClick={() => exportPDF("Policy_Report")}>PDF</button>
-              <button style={buttonStyle} onClick={() => exportExcel(policyData, "Policy_Report")}>XLSX</button>
+              <button style={buttonSecondary} onClick={() => exportPDF("Policy_Report")}>PDF</button>
+              <button style={buttonPrimary} onClick={() => exportExcel(policyData, "Policy_Report")}>XLSX</button>
             </p>
             <p>Nov 2024 Training Data
-              <button style={buttonStyle} onClick={() => exportPDF("Training_Data")}>PDF</button>
-              <button style={buttonStyle} onClick={() => exportExcel(trainingData, "Training_Data")}>XLSX</button>
+              <button style={buttonSecondary} onClick={() => exportPDF("Training_Data")}>PDF</button>
+              <button style={buttonPrimary} onClick={() => exportExcel(trainingData, "Training_Data")}>XLSX</button>
             </p>
             <p>Incident Log
-              <button style={buttonStyle} onClick={() => exportPDF("Incident_Log")}>PDF</button>
-              <button style={buttonStyle} onClick={() => exportExcel(trendData, "Incident_Log")}>XLSX</button>
+              <button style={buttonSecondary} onClick={() => exportPDF("Incident_Log")}>PDF</button>
+              <button style={buttonPrimary} onClick={() => exportExcel(trendData, "Incident_Log")}>XLSX</button>
             </p>
           </div>
 
           {/* Custom Report Builder */}
           <div style={cardStyle}>
-            <h3 style={{ fontFamily: "Poppins", color: "#fff" }}>Custom Report Builder</h3>
-            <input type="text" placeholder="All / HR / Sales..." style={{ width: "100%", margin: "5px 0", padding: "6px", borderRadius: "6px", border: "1px solid #444", background: "#000", color: "#fff" }} />
-            <input type="text" placeholder="All / Employee / Manager..." style={{ width: "100%", margin: "5px 0", padding: "6px", borderRadius: "6px", border: "1px solid #444", background: "#000", color: "#fff" }} />
-            <input type="text" placeholder="Custom / Last 30 days..." style={{ width: "100%", margin: "5px 0", padding: "6px", borderRadius: "6px", border: "1px solid #444", background: "#000", color: "#fff" }} />
-            <div style={{ marginTop: "10px", display: "flex", gap: "10px" }}>
-              <button style={{ ...buttonStyle, flex: 1, background: "#007bff" }}>Preview Report</button>
-              <button style={{ ...buttonStyle, flex: 1 }}>Export PDF/XLSX</button>
+            <h3 style={{ fontFamily: "Poppins", color: "#fff", marginBottom: "15px" }}>
+              Custom Report Builder
+            </h3>
+            <input
+              type="text"
+              placeholder="Select Department / Role"
+              style={{
+                width: "100%",
+                margin: "6px 0",
+                padding: "8px",
+                borderRadius: "6px",
+                border: "1px solid #444",
+                background: "#000",
+                color: "#fff",
+              }}
+            />
+            <input
+              type="text"
+              placeholder="Select User Type / Manager"
+              style={{
+                width: "100%",
+                margin: "6px 0",
+                padding: "8px",
+                borderRadius: "6px",
+                border: "1px solid #444",
+                background: "#000",
+                color: "#fff",
+              }}
+            />
+            <input
+              type="text"
+              placeholder="Date Range (e.g. Last 30 days)"
+              style={{
+                width: "100%",
+                margin: "6px 0",
+                padding: "8px",
+                borderRadius: "6px",
+                border: "1px solid #444",
+                background: "#000",
+                color: "#fff",
+              }}
+            />
+            <div style={{ marginTop: "12px", display: "flex", gap: "10px" }}>
+              <button style={{ ...buttonPrimary, flex: 1 }}>Preview</button>
+              <button style={{ ...buttonSecondary, flex: 1 }}>Export</button>
             </div>
           </div>
         </div>
