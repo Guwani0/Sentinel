@@ -6,13 +6,17 @@ import {
   DocumentTextIcon,
 } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
+import Header from "../Components/Header"; // ✅ import header
 
 function SATPP() {
   const completion = 40; // Example progress %
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-black text-white flex flex-col">
+      {/* ✅ Global Header */}
+      <Header user={{ username: "Employee", role: "employee" }} />
+
       {/* Hero Intro Block */}
       <div className="relative w-full py-10 px-6 md:px-16 bg-purple-900 bg-opacity-70 rounded-lg mb-8">
         <div className="max-w-5xl">
