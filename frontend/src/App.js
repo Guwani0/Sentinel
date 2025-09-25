@@ -3,7 +3,12 @@ import Navbar from "./Components/Navbar";
 import logo from "./assets/logo.png"; // make sure logo.png exists in /src/assets/
 import { Routes, Route, useNavigate } from "react-router-dom";   // ✅ added useNavigate
 import CTDPage1 from "./Pages/CTDPage1";
-import ADMdash from "./Pages/ADMdash";
+import CTD from "./Pages/CTD";
+import CTDPolicyAck from "./Pages/CTDPolicyAck";
+import CTDTraining from "./Pages/CTDTraining";
+import CTDIncSevere from "./Pages/CTDIncSevere";
+import CTDComTrend from "./Pages/CTDComTrend";
+import CTDCstmRpt from "./Pages/CTDCstmRpt";
 
 function App() {
   const navigate = useNavigate(); // ✅ navigation hook
@@ -229,8 +234,13 @@ function App() {
 
   {/* ✅ Dashboard route */}
   <Route path="/dashboard" element={<CTDPage1 />} />
+  <Route path="/ctd/policy-ack" element={<CTDPolicyAck />} />
+  <Route path="/ctd/training-stats" element={<CTDTraining />} />
+  <Route path="/ctd/incident-severity" element={<CTDIncSevere />} />
+  <Route path="/ctd/compliance-trend" element={<CTDComTrend />} />
+  <Route path="/ctd/custom-report" element={<CTDCstmRpt />} />
   {/* Dev-only admin preview route (no nav link) */}
-  <Route path="/adm" element={<ADMdash />} />
+  <Route path="/ctd" element={<CTD />} />
       </Routes>
     </>
   );
