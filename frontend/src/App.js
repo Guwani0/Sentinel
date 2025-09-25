@@ -3,6 +3,7 @@ import Navbar from "./Components/Navbar";
 import logo from "./assets/logo.png"; // make sure logo.png exists in /src/assets/
 import { Routes, Route, useNavigate } from "react-router-dom";   // ✅ added useNavigate
 import CTDPage1 from "./Pages/CTDPage1";
+import ADMdash from "./Pages/ADMdash";
 
 function App() {
   const navigate = useNavigate(); // ✅ navigation hook
@@ -226,8 +227,10 @@ function App() {
           }
         />
 
-        {/* ✅ Dashboard route */}
-        <Route path="/dashboard" element={<CTDPage1 />} />
+  {/* ✅ Dashboard route */}
+  <Route path="/dashboard" element={<CTDPage1 />} />
+  {/* Dev-only admin preview route (no nav link) */}
+  <Route path="/adm" element={<ADMdash />} />
       </Routes>
     </>
   );

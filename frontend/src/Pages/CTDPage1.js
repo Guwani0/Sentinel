@@ -134,6 +134,10 @@ export default function CTDPage1() {
     setShowPreview(true);
   };
 
+  const closePreview = () => {
+    setShowPreview(false);
+  };
+
   // Custom tooltip to avoid duplicate entries (Area + Line using same dataKey)
   const CustomTooltip = ({ active, payload, label }) => {
     if (!active || !payload || !payload.length) return null;
@@ -162,7 +166,7 @@ export default function CTDPage1() {
     <div style={{ backgroundColor: "#000", minHeight: "100vh", padding: "30px", color: "#fff", fontFamily: "Inter, sans-serif" }}>
       <h1 style={{
         fontFamily: "Poppins, sans-serif",
-        fontSize: "3rem",
+        fontSize: 'clamp(1.8rem, 4vw, 3rem)',
         marginBottom: "30px",
         fontWeight: 800,
         letterSpacing: '0.6px',
@@ -175,24 +179,26 @@ export default function CTDPage1() {
         Compliance Tracking Dashboard
       </h1>
 
-      {/* ✅ First Row - Donut Charts Horizontally */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "20px", marginBottom: "25px" }}>
+  {/* ✅ First Row - Donut Charts Horizontally */}
+  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "20px", marginBottom: "25px" }}>
         
         {/* Policy Ack */}
         <div style={cardStyle}>
-          <h3 style={{ fontFamily: "Poppins", color: "#fff", marginBottom: "15px" }}>
+          <h3 style={{ fontFamily: "Poppins", color: "#a78bfa", marginBottom: "15px" }}>
             Policy Acknowledgement Rate
           </h3>
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <PieChart width={220} height={220}>
-              <Pie data={policyData} dataKey="value" innerRadius={55} outerRadius={85}>
-                {policyData.map((entry, index) => (
-                  <Cell key={index} fill={COLORS[index % COLORS.length]} />
-                ))}
-              </Pie>
-              <Legend />
-              <Tooltip />
-            </PieChart>
+          <div style={{ width: '100%', height: 260 }}>
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie data={policyData} dataKey="value" innerRadius={55} outerRadius={85}>
+                  {policyData.map((entry, index) => (
+                    <Cell key={index} fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Pie>
+                <Legend />
+                <Tooltip />
+              </PieChart>
+            </ResponsiveContainer>
           </div>
           <p style={{ fontFamily: "Poppins", marginTop: "20px", fontWeight: "600" }}>
             92% (1340/1500 users)
@@ -201,19 +207,21 @@ export default function CTDPage1() {
 
         {/* Training Stats */}
         <div style={cardStyle}>
-          <h3 style={{ fontFamily: "Poppins", color: "#fff", marginBottom: "15px" }}>
+          <h3 style={{ fontFamily: "Poppins", color: "#a78bfa", marginBottom: "15px" }}>
             Training Completion Statistics
           </h3>
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <PieChart width={220} height={220}>
-              <Pie data={trainingData} dataKey="value" innerRadius={55} outerRadius={85}>
-                {trainingData.map((entry, index) => (
-                  <Cell key={index} fill={COLORS[index % COLORS.length]} />
-                ))}
-              </Pie>
-              <Legend />
-              <Tooltip />
-            </PieChart>
+          <div style={{ width: '100%', height: 260 }}>
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie data={trainingData} dataKey="value" innerRadius={55} outerRadius={85}>
+                  {trainingData.map((entry, index) => (
+                    <Cell key={index} fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Pie>
+                <Legend />
+                <Tooltip />
+              </PieChart>
+            </ResponsiveContainer>
           </div>
           <p style={{ fontFamily: "Poppins", marginTop: "20px", fontWeight: "600" }}>
             88% (1168/1500 users)
@@ -222,18 +230,20 @@ export default function CTDPage1() {
 
         {/* Incident Severity */}
         <div style={cardStyle}>
-          <h3 style={{ fontFamily: "Poppins", color: "#fff", marginBottom: "15px" }}>
+          <h3 style={{ fontFamily: "Poppins", color: "#a78bfa", marginBottom: "15px" }}>
             Incident Severity Breakdown
           </h3>
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <PieChart width={220} height={220}>
-              <Pie data={incidentSeverity} dataKey="value" innerRadius={55} outerRadius={85}>
-                {incidentSeverity.map((entry, index) => (
-                  <Cell key={index} fill={COLORS[index % COLORS.length]} />
-                ))}
-              </Pie>
-              <Tooltip />
-            </PieChart>
+          <div style={{ width: '100%', height: 260 }}>
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie data={incidentSeverity} dataKey="value" innerRadius={55} outerRadius={85}>
+                  {incidentSeverity.map((entry, index) => (
+                    <Cell key={index} fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Pie>
+                <Tooltip />
+              </PieChart>
+            </ResponsiveContainer>
           </div>
           <div style={{ display: "flex", justifyContent: "space-around", marginTop: "20px" }}>
             <span style={{ color: "#ff4d4d", fontWeight: "600" }}>High</span>
@@ -244,11 +254,11 @@ export default function CTDPage1() {
       </div>
 
       {/* ✅ Second Row */}
-      <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: "25px" }}>
+  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 2fr))", gap: "25px" }}>
         
         {/* Compliance Trend */}
         <div style={cardStyle}>
-          <h3 style={{ fontFamily: "Poppins", color: "#fff" }}>Compliance Trend (Last 6 Months)</h3>
+          <h3 style={{ fontFamily: "Poppins", color: "#a78bfa" }}>Compliance Trend (Last 6 Months)</h3>
           <div style={{ width: "100%", height: 300 }}>
             <ResponsiveContainer>
               <LineChart data={trendData} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
@@ -268,7 +278,7 @@ export default function CTDPage1() {
 
   {/* Automated Reminders */}
   <div style={cardCompactStyle}>
-          <h3 style={{ fontFamily: "Poppins", color: "#fff", marginBottom: 8 }}>Automated Reminders</h3>
+          <h3 style={{ fontFamily: "Poppins", color: "#a78bfa", marginBottom: 8 }}>Automated Reminders</h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             {[
               { label: 'Policy Nudges', state: policy, setter: setPolicy },
@@ -302,12 +312,12 @@ export default function CTDPage1() {
         </div>
       </div>
 
-      {/* ✅ Third Row */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "25px", marginTop: "25px" }}>
+  {/* ✅ Third Row */}
+  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "25px", marginTop: "25px", alignItems: 'start' }}>
         
         {/* Compliance Reports */}
         <div style={cardStyle}>
-          <h3 style={{ fontFamily: "Poppins", color: "#fff", marginBottom: 12 }}>Compliance Reports</h3>
+          <h3 style={{ fontFamily: "Poppins", color: "#a78bfa", marginBottom: 12 }}>Compliance Reports</h3>
           {/* Compact list */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12, textAlign: 'left' }}>
             {[
@@ -317,7 +327,7 @@ export default function CTDPage1() {
             ].map((r, i) => (
               <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div style={{ color: '#fff', fontWeight: 700, fontFamily: 'sans-serif', fontSize: 14 }}>{r.title}</div>
-                <div style={{ display: 'flex', gap: 8 }}>
+                <div style={{ display: 'flex', gap: 12 }}>
                   <button
                     style={{ ...buttonSecondary, padding: '6px 10px', fontSize: 12, fontFamily: 'Poppins, sans-serif', fontWeight: 600 }}
                     onClick={() => exportPDF(r.pdf)}
@@ -334,9 +344,9 @@ export default function CTDPage1() {
           </div>
         </div>
 
-        {/* Custom Report Builder */}
-<div style={cardStyle}>
-  <h3 style={{ fontFamily: "Poppins", color: "#fff", marginBottom: "15px" }}>
+  {/* Custom Report Builder */}
+  <div style={{ ...cardStyle, display: 'flex', flexDirection: 'column', alignItems: 'stretch' }}>
+  <h3 style={{ fontFamily: "Poppins", color: "#a78bfa", marginBottom: "15px" }}>
     Custom Report Builder
   </h3>
 
@@ -372,18 +382,20 @@ export default function CTDPage1() {
     </button>
   </div>
 
-  {/* Inline preview panel */}
+  {/* Modal preview overlay - does not affect surrounding layout */}
   {showPreview && (
-    <div style={{ marginTop: 12, textAlign: 'left' }}>
-      <div style={{ ...cardStyle }}>
+    <div style={{ position: 'fixed', inset: 0, display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 9999 }} aria-modal={true} role="dialog">
+      <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.6)' }} onClick={closePreview} />
+      <div style={{ width: '720px', maxWidth: '95%', maxHeight: '80vh', overflowY: 'auto', background: '#0b0b0b', border: '1px solid rgba(167,139,250,0.12)', borderRadius: 12, padding: 18, boxShadow: '0 8px 30px rgba(0,0,0,0.6)', position: 'relative' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <div style={{ color: '#fff', fontWeight: 700 }}>Preview: Custom Report</div>
-          <div style={{ display: 'flex', gap: 8 }}>
+          <div style={{ color: '#a78bfa', fontWeight: 700, fontSize: 16 }}>Preview: Custom Report</div>
+          <div style={{ display: 'flex', gap: 12 }}>
             <button style={{ ...buttonSecondary }} onClick={exportCustomReport}>Export</button>
-            <button style={{ ...buttonPrimary }} onClick={() => setShowPreview(false)}>Close</button>
+            <button style={{ ...buttonPrimary }} onClick={closePreview}>Close</button>
           </div>
         </div>
-        <div style={{ marginTop: 10 }}>
+
+        <div style={{ marginTop: 12 }}>
           <table style={{ width: '100%', color: '#fff', borderCollapse: 'collapse' }}>
             <tbody>
               {previewData.map((row, i) => (
