@@ -1,6 +1,6 @@
 // src/Pages/CTD.js
-import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import { Link } from 'react-router-dom';
 import { FaFileAlt, FaRegFileAlt, FaChalkboardTeacher, FaExclamationTriangle, FaChartLine, FaCog } from 'react-icons/fa';
 
 export default function CTD() {
@@ -16,30 +16,7 @@ export default function CTD() {
     fontFamily: "Inter, sans-serif",
   };
 
-  const buttonPrimary = {
-    backgroundColor: "#007bff",
-    color: "#fff",
-    border: "none",
-    borderRadius: "8px",
-    padding: "8px 14px",
-    cursor: "pointer",
-    fontSize: "13px",
-    fontFamily: "Poppins, sans-serif",
-    transition: "0.3s ease",
-  };
-
-  const buttonSecondary = {
-    backgroundColor: "#711bb5",
-    color: "#fff",
-    border: "none",
-    borderRadius: "8px",
-    padding: "8px 14px",
-    cursor: "pointer",
-    fontSize: "13px",
-    fontFamily: "Poppins, sans-serif",
-    transition: "0.3s ease",
-    marginRight: "12px",
-  };
+  // note: button styles removed (not used in this file) to avoid lint warnings
 
   const clickableCard = {
     ...cardStyle,
@@ -49,19 +26,13 @@ export default function CTD() {
 
   const cardHeaderStyle = { display: 'flex', alignItems: 'center', gap: '10px', fontFamily: 'Poppins', marginBottom: '15px' };
 
-  // navigation
-  const navigate = useNavigate();
+  // no imperative navigation required — using semantic <Link> components
 
-  const makeNavigateHandler = (path) => (e) => {
-    // allow links to be used even if clicked on nested elements
-    navigate(path);
-  };
-
-  const handleKeyDown = (path) => (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      navigate(path);
-    }
+  // We use semantic <Link> components for navigation (better accessibility)
+  const linkCardStyle = {
+    textDecoration: 'none',
+    display: 'block',
+    color: 'inherit',
   };
 
   return (
@@ -80,98 +51,74 @@ export default function CTD() {
       {/* ✅ Dashboard Layout */}
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "25px" }}>
         {/* Policy Acknowledgement Rate */}
-        <div
-          style={clickableCard}
-          role="button"
-          tabIndex={0}
-          onClick={makeNavigateHandler('/ctd/policy-ack')}
-          onKeyDown={handleKeyDown('/ctd/policy-ack')}
-        >
+        <Link to="/ctd/policy-ack" aria-label="Policy Acknowledgement Rate" style={linkCardStyle}>
+          <div style={clickableCard}>
           <h3 style={cardHeaderStyle}>
             <FaFileAlt style={{ color: '#f3f3f3', width: 20, height: 20 }} />
             Policy Acknowledgement Rate
           </h3>
           <p>View the percentage of employees who have acknowledged required policies and drill into policy-level details.</p>
-        </div>
+          </div>
+        </Link>
 
         {/* Training Management */}
         {/* Training Completion Statistics */}
-        <div
-          style={clickableCard}
-          role="button"
-          tabIndex={0}
-          onClick={makeNavigateHandler('/ctd/training-stats')}
-          onKeyDown={handleKeyDown('/ctd/training-stats')}
-        >
+        <Link to="/ctd/training-stats" aria-label="Training Completion Statistics" style={linkCardStyle}>
+          <div style={clickableCard}>
           <h3 style={cardHeaderStyle}>
             <FaChalkboardTeacher style={{ color: '#f3f3f3', width: 20, height: 20 }} />
             Training Completion Statistics
           </h3>
           <p>Overview of training completion rates, overdue learners, and course engagement metrics.</p>
-        </div>
+          </div>
+        </Link>
 
         {/* User & Role Management */}
         {/* Incident Severity Breakdown */}
-        <div
-          style={clickableCard}
-          role="button"
-          tabIndex={0}
-          onClick={makeNavigateHandler('/ctd/incident-severity')}
-          onKeyDown={handleKeyDown('/ctd/incident-severity')}
-        >
+        <Link to="/ctd/incident-severity" aria-label="Incident Severity Breakdown" style={linkCardStyle}>
+          <div style={clickableCard}>
           <h3 style={cardHeaderStyle}>
             <FaExclamationTriangle style={{ color: '#f3f3f3', width: 20, height: 20 }} />
             Incident Severity Breakdown
           </h3>
           <p>Breakdown of incidents by severity, trending over time to highlight high-risk areas.</p>
-        </div>
+          </div>
+        </Link>
 
         {/* Incident Management */}
         {/* Compliance Trend (Last 6 Months) */}
-        <div
-          style={clickableCard}
-          role="button"
-          tabIndex={0}
-          onClick={makeNavigateHandler('/ctd/compliance-trend')}
-          onKeyDown={handleKeyDown('/ctd/compliance-trend')}
-        >
+        <Link to="/ctd/compliance-trend" aria-label="Compliance Trend" style={linkCardStyle}>
+          <div style={clickableCard}>
           <h3 style={cardHeaderStyle}>
             <FaChartLine style={{ color: '#f3f3f3', width: 20, height: 20 }} />
             Compliance Trend (Last 6 Months)
           </h3>
           <p>Line chart overview of compliance metrics across the last 6 months with target lines and trend indicators.</p>
-        </div>
+          </div>
+        </Link>
 
         {/* Notifications Panel */}
         {/* Custom Report Builder */}
-        <div
-          style={clickableCard}
-          role="button"
-          tabIndex={0}
-          onClick={makeNavigateHandler('/ctd/custom-report')}
-          onKeyDown={handleKeyDown('/ctd/custom-report')}
-        >
+        <Link to="/ctd/custom-report" aria-label="Custom Report Builder" style={linkCardStyle}>
+          <div style={clickableCard}>
           <h3 style={cardHeaderStyle}>
             <FaRegFileAlt style={{ color: '#f3f3f3', width: 20, height: 20 }} />
             Custom Report Builder
           </h3>
           <p>Build and export custom compliance reports for roles, teams, and date ranges.</p>
-        </div>
+          </div>
+        </Link>
 
         {/* System Settings */}
-        <div
-          style={clickableCard}
-          role="button"
-          tabIndex={0}
-          onClick={makeNavigateHandler('/ctd/settings')}
-          onKeyDown={handleKeyDown('/ctd/settings')}
-        >
+        <Link to="/ctd/settings" aria-label="System Settings" style={linkCardStyle}>
+          <div style={clickableCard}>
           <h3 style={cardHeaderStyle}>
             <FaCog style={{ color: '#f3f3f3', width: 20, height: 20 }} />
             System Settings
           </h3>
           <p>Manage theme, view audit logs, and configure integrations.</p>
-        </div>
+          </div>
+        </Link>
       </div>
     </div>
   );
