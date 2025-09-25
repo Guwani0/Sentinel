@@ -8,7 +8,7 @@ import dataConfImg from "../assets/images/data-confidentiality.jpg";
 import incidentReportImg from "../assets/images/incident-reporting.jpg";
 import socialEngImg from "../assets/images/social-engineering.jpg";
 
-const trainingModules = [
+export const trainingModules = [
   {
     id: "1",
     title: "Access Control & Password Security",

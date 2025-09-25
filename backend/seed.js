@@ -13,24 +13,31 @@ async function seedUsers() {
 
     const users = [
       { username: "Silva-ADM-001", password: "SilvaADM@123", role: "admin", name: "Silva Admin", email: "jinuka.markperera@gmail.com" },
-      { username: "PERERA-SECOPS-001", password: "PereraOfficer@123", role: "security", name: "Perera Officer", email: "perera@security.com" },
-      { username: "Fernando-IT-001", password: "FernandoIT@123", role: "employee", name: "Fernando IT", email: "fernando@it.com" },
+      { username: "PERERA-SECOPS-001", password: "PereraOfficer@123", role: "security", name: "Perera Officer", email: "guwaniemesha@gmail.com" },
+      { username: "Fernando-IT-001", password: "FernandoIT@123", role: "employee", name: "Fernando IT", email: "amath.markperera@gmail.com" },
     ];
 
     for (let userData of users) {
       const hashedPassword = await bcrypt.hash(userData.password, 10);
-      const user = new User({
-        username: userData.username,
-        password: hashedPassword,
-        role: userData.role,
-        name: userData.name,
-        email: userData.email,
-      });
-      await user.save();
-      console.log(`User ${userData.username} created`);
+
+      // Use upsert → update if exists, otherwise insert
+      await User.updateOne(
+        { username: userData.username }, // search by username
+        {
+          $set: {
+            password: hashedPassword,
+            role: userData.role,
+            name: userData.name,
+            email: userData.email,
+          },
+        },
+        { upsert: true }
+      );
+
+      console.log(`User ${userData.username} inserted/updated`);
     }
 
-    console.log("Seeding completed");
+    console.log("Seeding completed ✅");
     process.exit(0);
   } catch (err) {
     console.error(err);
