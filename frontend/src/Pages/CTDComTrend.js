@@ -14,7 +14,7 @@ export default function CTDComTrend() {
   return (
     <div style={{ padding: 28, minHeight: '100vh', background: '#000', color: '#fff' }}>
       <div style={{ maxWidth: 1000, margin: '0 auto' }}>
-  {/* header removed intentionally to declutter UI */}
+  <h2 style={{ color: '#9be7ff', fontFamily: 'Poppins, sans-serif' }}>Compliance Trend (Last 6 Months)</h2>
 
         <div style={{ marginTop: 18, background: 'linear-gradient(180deg,#050507, #1b2430)', padding: 18, borderRadius: 12 }}>
           <h4 style={{ color: '#fff' }}>Overall compliance %</h4>

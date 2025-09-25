@@ -23,7 +23,7 @@ export default function CTDIncSevere() {
   return (
     <div style={{ padding: 28, minHeight: '100vh', background: '#000', color: '#fff' }}>
       <div style={{ maxWidth: 1100, margin: '0 auto' }}>
-  {/* header removed intentionally to declutter UI */}
+  <h2 style={{ color: '#ffb86b', fontFamily: 'Poppins, sans-serif' }}>Incident Severity Breakdown</h2>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 420px', gap: 20, marginTop: 20 }}>
           <div style={{ background: 'linear-gradient(180deg,#050507, #2b0520)', padding: 16, borderRadius: 10 }}>
