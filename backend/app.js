@@ -1,14 +1,12 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
-const cors = require("cors"); // 👈 add this
 const authRoutes = require("./Routes/authRoutes");
 
 dotenv.config();
 const app = express();
 
 // Middleware
-app.use(cors({ origin: "http://localhost:3000" })); // 👈 allow frontend
 app.use(express.json());
 
 // Routes

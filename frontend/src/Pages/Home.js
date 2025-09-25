@@ -4,13 +4,13 @@ import logo from "../assets/logo.png";
 
 function Home() {
   return (
-    <div className="Home">
+    <div className="Home bg-black text-white">
       <Navbar />
 
       {/* Hero Section */}
       <header
         className="hero"
-        style={{  
+        style={{
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
@@ -44,11 +44,18 @@ function Home() {
         </div>
 
         {/* Right Side - Logo */}
-        <div style={{ flex: "1 1 300px", textAlign: "center" }}>
+        <div
+          style={{
+            flex: "1 1 300px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
           <img
             src={logo}
             alt="Sentinel Logo"
-            style={{ maxWidth: "320px", width: "100%", height: "auto" }}
+            style={{ maxWidth: "350px", width: "100%", height: "auto" }}
           />
         </div>
       </header>
@@ -116,17 +123,84 @@ function Home() {
         ))}
       </section>
 
-      {/* Footer */}
-      <footer
+      {/* Testimonials Section */}
+      <section
+        className="testimonials"
         style={{
+          background: "#0a0a0a",
+          padding: "60px 40px",
           textAlign: "center",
-          padding: "20px",
-          background: "#000",
-          color: "#fff",
         }}
       >
-        <p>© 2025 Sentinel | Sri Lanka Army IT Department</p>
-      </footer>
+        <h2
+          style={{
+            fontSize: "2rem",
+            marginBottom: "40px",
+            color: "#b76bff",
+            fontWeight: "bold",
+          }}
+        >
+          What Our Users Say
+        </h2>
+
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+            gap: "20px",
+            maxWidth: "1100px",
+            margin: "0 auto",
+          }}
+        >
+          {[
+            {
+              stars: 5,
+              text: "Engaging and useful security awareness training.",
+              name: "John S",
+            },
+            {
+              stars: 5,
+              text: "Great platform with powerful tools and reporting!",
+              name: "Wilfredo L",
+            },
+            {
+              stars: 5,
+              text: "Cut down the hours I spent troubleshooting phishing training sims.",
+              name: "Joshua S",
+            },
+          ].map((review, idx) => (
+            <div
+              key={idx}
+              style={{
+                background: "linear-gradient(145deg, #111, #1e1e1e)",
+                borderRadius: "12px",
+                padding: "20px",
+                color: "#fff",
+                boxShadow: "0 0 15px rgba(113,27,181,0.3)",
+                textAlign: "left",
+              }}
+            >
+              <div style={{ color: "#fbbf24", marginBottom: "10px" }}>
+                {"★".repeat(review.stars)}
+              </div>
+              <p style={{ fontStyle: "italic", marginBottom: "10px" }}>
+                "{review.text}"
+              </p>
+              <p style={{ fontWeight: "bold", color: "#b76bff" }}>
+                {review.name}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <button
+          className="neon-btn"
+          style={{ marginTop: "30px" }}
+          onClick={() => alert("Redirect to reviews page")}
+        >
+          Read More Reviews
+        </button>
+      </section>
 
       {/* Neon Button Styles */}
       <style>{`
@@ -163,37 +237,6 @@ function Home() {
         .neon-btn:active {
           transform: translateY(0) scale(0.98);
           filter: brightness(0.9);
-        }
-
-        .neon-btn::before {
-          content: "";
-          position: absolute;
-          inset: -2px;
-          border-radius: 10px;
-          background: conic-gradient(from 0deg, #711bb5, #b76bff, #ff4dff, #711bb5);
-          filter: blur(10px);
-          z-index: -1;
-          opacity: 1;
-          background-size: 200% 200%;
-          animation: neon-sweep 3s linear infinite;
-        }
-
-        @keyframes neon-sweep {
-          0%   { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          .neon-btn,
-          .neon-btn::before {
-            transition: none !important;
-            animation: none !important;
-          }
-        }
-
-        @media (max-width: 768px) {
-          .hero { padding: 40px 24px !important; }
-          .features { padding: 30px 24px !important; }
         }
       `}</style>
     </div>
