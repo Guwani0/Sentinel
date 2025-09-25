@@ -37,16 +37,7 @@ export default function CTD() {
 
   return (
     <div style={{ backgroundColor: "#000", minHeight: "100vh", padding: "30px" }}>
-      <h1
-        style={{
-          fontFamily: "Poppins",
-          color: "#711bb5",
-          fontSize: "2.2rem",
-          marginBottom: "30px",
-        }}
-      >
-        Compliance Tracking Dashboard
-      </h1>
+      {/* header removed intentionally to declutter UI */}
 
       {/* ✅ Dashboard Layout */}
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "25px" }}>

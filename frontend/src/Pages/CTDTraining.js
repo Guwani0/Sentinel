@@ -20,7 +20,7 @@ export default function CTDTraining() {
   return (
     <div style={{ padding: 30, minHeight: '100vh', background: '#000', color: '#fff' }}>
       <div style={{ maxWidth: 1000, margin: '0 auto' }}>
-        <h2 style={{ color: '#a78bfa', fontFamily: 'Poppins, sans-serif' }}>Training Completion Statistics</h2>
+  {/* header removed intentionally to declutter UI */}
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 360px', gap: 24, marginTop: 18 }}>
           <div style={{ background: 'linear-gradient(180deg,#0b0410 0%, #2a0033 100%)', padding: 18, borderRadius: 12 }}>

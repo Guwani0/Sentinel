@@ -12,9 +12,7 @@ export default function CTDPolicyAck() {
   return (
     <div style={{ padding: 30, minHeight: '100vh', background: '#000' }}>
       <div style={{ maxWidth: 420, margin: '20px auto', padding: 20 }}>
-        <div style={{ color: '#fff', textAlign: 'center', marginBottom: 10, fontFamily: 'Poppins, sans-serif' }}>
-          <h2 style={{ color: '#a78bfa', margin: 0 }}>Policy Acknowledgement Rate</h2>
-        </div>
+        {/* header removed intentionally to declutter UI */}
 
         <div style={{ background: 'linear-gradient(180deg,#0b0410 0%, #2a0033 100%)', borderRadius: 12, padding: 18, boxShadow: '0 6px 20px rgba(113,27,181,0.35)' }}>
           <div style={{ width: '100%', height: 220 }}>

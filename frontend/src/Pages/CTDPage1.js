@@ -164,20 +164,7 @@ export default function CTDPage1() {
 
   return (
     <div style={{ backgroundColor: "#000", minHeight: "100vh", padding: "30px", color: "#fff", fontFamily: "Inter, sans-serif" }}>
-      <h1 style={{
-        fontFamily: "Poppins, sans-serif",
-        fontSize: 'clamp(1.8rem, 4vw, 3rem)',
-        marginBottom: "30px",
-        fontWeight: 800,
-        letterSpacing: '0.6px',
-        background: 'linear-gradient(90deg,#9b4cf8 0%, #711bb5 40%, #ff6aa3 100%)',
-        WebkitBackgroundClip: 'text',
-        backgroundClip: 'text',
-        color: 'transparent',
-        textShadow: '0 2px 6px rgba(0,0,0,0.6)'
-      }}>
-        Compliance Tracking Dashboard
-      </h1>
+      {/* header removed intentionally to declutter UI */}
 
   {/* ✅ First Row - Donut Charts Horizontally */}
   <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "20px", marginBottom: "25px" }}>

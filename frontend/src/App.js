@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "./Components/Navbar";
 import logo from "./assets/logo.png"; // make sure logo.png exists in /src/assets/
-import { Routes, Route, useNavigate } from "react-router-dom";   // ✅ added useNavigate
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";   // ✅ added useNavigate, useLocation
 import CTDPage1 from "./Pages/CTDPage1";
 import CTD from "./Pages/CTD";
 import CTDPolicyAck from "./Pages/CTDPolicyAck";
@@ -12,10 +12,11 @@ import CTDCstmRpt from "./Pages/CTDCstmRpt";
 
 function App() {
   const navigate = useNavigate(); // ✅ navigation hook
+  const location = useLocation();
 
   return (
     <>
-      <Navbar />
+  {(!location.pathname.startsWith('/ctd') && !location.pathname.startsWith('/dashboard')) && <Navbar />}
       <Routes>
         {/* Home Route */}
         <Route

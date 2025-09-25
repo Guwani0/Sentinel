@@ -54,7 +54,7 @@ export default function CTDCstmRpt() {
   return (
     <div style={container}>
       <div style={inner}>
-        <h2 style={{ color: '#9ef2ff', fontFamily: 'Poppins, sans-serif' }}>Custom Report Builder</h2>
+  {/* header removed intentionally to declutter UI */}
 
         <div style={controls}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
