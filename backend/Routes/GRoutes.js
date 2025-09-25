@@ -17,4 +17,10 @@ router.post('/custom-report', controller.postCustomReport);
 // Seed sample data (dev only)
 router.post('/seed', controller.seedData);
 
+// Audit logs
+router.get('/audit-logs', controller.getAuditLogs);
+router.post('/audit-logs/seed', controller.seedAuditLogs);
+router.get('/audit-logs/actors', controller.getDistinctActors);
+router.get('/audit-logs/actions', controller.getDistinctActions);
+
 module.exports = router;

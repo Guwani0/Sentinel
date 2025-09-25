@@ -32,6 +32,11 @@ export default function CTDPage1() {
 
   const COLORS = ["#711bb5", "#ffaa00", "#ff4d4d"];
 
+  // totals for donut tooltips
+  const policyTotal = policyData.reduce((s, p) => s + (p.value || 0), 0);
+  const trainingTotal = trainingData.reduce((s, p) => s + (p.value || 0), 0);
+  const incidentTotal = incidentSeverity.reduce((s, p) => s + (p.value || 0), 0);
+
   // ✅ Export Excel
   const exportExcel = (data, title) => {
     const wb = XLSX.utils.book_new();
@@ -95,8 +100,8 @@ export default function CTDPage1() {
     minHeight: 'auto'
   };
 
-  // ✅ User Role (simulate login role)
-  const [userRole] = useState("Employee"); // Change to "Admin" or "Manager" to test
+  // ✅ User Role (simulate login role) - not currently used
+  // const [userRole] = useState("Employee"); // Change to "Admin" or "Manager" to test
 
   // Custom Report Builder state
   const [customRole, setCustomRole] = useState("");
@@ -162,6 +167,22 @@ export default function CTDPage1() {
     );
   };
 
+  // Reusable donut tooltip: shows slice name, value and percent of total
+  const DonutTooltip = ({ active, payload, total }) => {
+    if (!active || !payload || !payload.length) return null;
+    const item = payload[0];
+    const value = item.value || 0;
+    const name = item.name || item.dataKey || '';
+    const pct = total > 0 ? ((value / total) * 100).toFixed(1) : '0.0';
+    return (
+      <div style={{ background: '#111', padding: 10, borderRadius: 8, color: '#fff', border: '1px solid rgba(255,255,255,0.04)' }}>
+        <div style={{ fontWeight: 700, marginBottom: 6 }}>{name}</div>
+        <div style={{ color: '#cfcfcf' }}>{value} users</div>
+        <div style={{ marginTop: 6, color: '#a78bfa', fontWeight: 700 }}>{pct}%</div>
+      </div>
+    );
+  };
+
   return (
     <div style={{ backgroundColor: "#000", minHeight: "100vh", padding: "30px", color: "#fff", fontFamily: "Inter, sans-serif" }}>
       <h1 style={{
@@ -189,14 +210,14 @@ export default function CTDPage1() {
           </h3>
           <div style={{ width: '100%', height: 260 }}>
             <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
+                <PieChart>
                 <Pie data={policyData} dataKey="value" innerRadius={55} outerRadius={85}>
                   {policyData.map((entry, index) => (
                     <Cell key={index} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>
                 <Legend />
-                <Tooltip />
+                <Tooltip content={(props) => <DonutTooltip {...props} total={policyTotal} />} />
               </PieChart>
             </ResponsiveContainer>
           </div>
@@ -219,7 +240,7 @@ export default function CTDPage1() {
                   ))}
                 </Pie>
                 <Legend />
-                <Tooltip />
+                <Tooltip content={(props) => <DonutTooltip {...props} total={trainingTotal} />} />
               </PieChart>
             </ResponsiveContainer>
           </div>
@@ -241,7 +262,7 @@ export default function CTDPage1() {
                     <Cell key={index} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>
-                <Tooltip />
+                <Tooltip content={(props) => <DonutTooltip {...props} total={incidentTotal} />} />
               </PieChart>
             </ResponsiveContainer>
           </div>
@@ -258,7 +279,7 @@ export default function CTDPage1() {
         
         {/* Compliance Trend */}
         <div style={cardStyle}>
-          <h3 style={{ fontFamily: "Poppins", color: "#a78bfa" }}>Compliance Trend (Last 6 Months)</h3>
+    <h3 style={{ fontFamily: "Poppins", color: "#a78bfa" }}>Compliance Trend</h3>
           <div style={{ width: "100%", height: 300 }}>
             <ResponsiveContainer>
               <LineChart data={trendData} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>

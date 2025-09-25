@@ -1,4 +1,4 @@
-const { Policy, Training, Incident, Trend } = require(pathRequire('..', 'Model', 'GModels'));
+const { Policy, Training, Incident, Trend, AuditLog } = require(pathRequire('..', 'Model', 'GModels'));
 
 // Helper to require with path join
 function pathRequire(...parts) {
@@ -111,4 +111,85 @@ async function seedData(req, res) {
   }
 }
 
-module.exports = { getPolicies, getTraining, getIncidents, getTrends, postCustomReport, seedData };
+// List audit logs with paging, filters, and search
+async function getAuditLogs(req, res) {
+  try {
+    const { page = 1, limit = 25, actor, action, q, start, end } = req.query;
+    const filter = {};
+    if (actor) filter.actor = actor;
+    if (action) filter.action = action;
+    if (start || end) filter.timestamp = {};
+    if (start) filter.timestamp.$gte = new Date(start);
+    if (end) filter.timestamp.$lte = new Date(end);
+    if (q) {
+      // simple text search across actor, action, target, details
+      filter.$or = [
+        { actor: new RegExp(q, 'i') },
+        { action: new RegExp(q, 'i') },
+        { target: new RegExp(q, 'i') },
+        { details: new RegExp(q, 'i') },
+      ];
+    }
+
+    const skip = (Math.max(1, parseInt(page, 10)) - 1) * Math.max(1, parseInt(limit, 10));
+    const [items, total] = await Promise.all([
+      AuditLog.find(filter).sort({ timestamp: -1 }).skip(skip).limit(parseInt(limit, 10)).lean(),
+      AuditLog.countDocuments(filter),
+    ]);
+
+    res.json({ page: parseInt(page, 10), limit: parseInt(limit, 10), total, items });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+
+// Seed sample audit logs (dev only)
+async function seedAuditLogs(req, res) {
+  try {
+    await AuditLog.deleteMany({});
+    const now = new Date();
+    const sample = [
+      { timestamp: new Date(now.getTime() - 1000 * 60 * 60 * 24), actor: 'admin.user', action: 'Updated Policy', target: 'Acceptable Use v2', details: 'Changed version to 2.0' },
+      { timestamp: new Date(now.getTime() - 1000 * 60 * 60 * 48), actor: 'j.smith', action: 'Downloaded Report', target: 'Custom Report', details: 'CSV export, 120 rows' },
+      { timestamp: new Date(now.getTime() - 1000 * 60 * 60 * 72), actor: 'system', action: 'Integration Failure', target: 'LDAP Sync', details: 'Timeout connecting to ldap.example.local' },
+    ];
+    await AuditLog.insertMany(sample);
+    res.json({ seeded: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+
+// Return distinct actors for dropdowns
+async function getDistinctActors(req, res) {
+  try {
+    // Return top actors by frequency (most active first)
+    const agg = await AuditLog.aggregate([
+      { $group: { _id: '$actor', count: { $sum: 1 } } },
+      { $sort: { count: -1 } },
+      { $limit: 200 },
+    ]);
+    const actors = agg.map(a => a._id).filter(Boolean);
+    res.json(actors);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+
+// Return distinct actions for dropdowns
+async function getDistinctActions(req, res) {
+  try {
+    // Return top actions by frequency
+    const agg = await AuditLog.aggregate([
+      { $group: { _id: '$action', count: { $sum: 1 } } },
+      { $sort: { count: -1 } },
+      { $limit: 200 },
+    ]);
+    const actions = agg.map(a => a._id).filter(Boolean);
+    res.json(actions);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+
+module.exports = { getPolicies, getTraining, getIncidents, getTrends, postCustomReport, seedData, getAuditLogs, seedAuditLogs, getDistinctActors, getDistinctActions };

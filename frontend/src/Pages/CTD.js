@@ -37,7 +37,7 @@ export default function CTD() {
 
   return (
     <div style={{ backgroundColor: "#000", minHeight: "100vh", padding: "30px" }}>
-      <h1 style={{
+      <h1 className="text-purple-400" style={{
         fontFamily: "Poppins, sans-serif",
         fontSize: 'clamp(1.8rem, 4vw, 3rem)',
         marginBottom: "30px",
@@ -113,14 +113,14 @@ export default function CTD() {
           </div>
         </Link>
 
-        {/* System Settings */}
-        <Link to="/ctd/settings" aria-label="System Settings" style={linkCardStyle}>
+        {/* Audit Logs (replaces System Settings) */}
+        <Link to="/ctd/audit-logs" aria-label="Audit Logs" style={linkCardStyle}>
           <div style={clickableCard}>
           <h3 style={cardHeaderStyle}>
-            <FaCog style={{ color: '#f3f3f3', width: 20, height: 20 }} />
-            System Settings
+            <FaFileAlt style={{ color: '#f3f3f3', width: 20, height: 20 }} />
+            Audit Logs
           </h3>
-          <p>Manage theme, view audit logs, and configure integrations.</p>
+          <p>View and search immutable audit trails for policy changes, user actions, and exports.</p>
           </div>
         </Link>
       </div>
