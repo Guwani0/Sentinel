@@ -12,6 +12,8 @@ import SATPPVideos from "./Pages/SATPPVideos";
 import SATPPInfographics from "./Pages/SATPPInfographics";
 import SATPPSlides from "./Pages/SATPPSlides";
 import SATPPQuizInfo from "./Pages/SATPPQuizInfo"; 
+import PolicyManagementPage from "./Pages/PolicyManagementPage"; //nethupul
+import UserPoliciesPage from "./Pages/UserPoliciesPage"; //nethupul
 import SATPPQuiz from "./Pages/SATPPQuiz"; 
 import SATTrainingHistory from "./Pages/SATTrainingHistory.js";
 import Footer from "./Components/Footer.js";
@@ -35,6 +37,8 @@ function App() {
           <Route path="/satpp/quiz" element={<SATPPQuizInfo />} /> 
           <Route path="/satpp/quiz/start" element={<SATPPQuiz />} /> 
           <Route path="/history" element={<SATTrainingHistory />} />
+          <Route path="/PolicyManagement" element={<PolicyManagementPage />} /> 
+          <Route path="/user" element={<UserPoliciesPage />} />
         </Routes>
       </div>
 

@@ -2,6 +2,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const authRoutes = require("./Routes/authRoutes");
+const path = require("path"); //nethupul
+const bodyParser = require("body-parser"); //nethupul
 
 dotenv.config();
 const app = express();
@@ -11,6 +13,11 @@ app.use(express.json());
 
 // Routes
 app.use("/api/auth", authRoutes);
+//nethupul
+app.use(bodyParser.json());
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+const policyRoutes = require("./Routes/policies");
+app.use("/api/policies", policyRoutes);
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URI, {
