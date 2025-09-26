@@ -17,6 +17,9 @@ import UserPoliciesPage from "./Pages/UserPoliciesPage"; //nethupul
 import SATPPQuiz from "./Pages/SATPPQuiz"; 
 import SATTrainingHistory from "./Pages/SATTrainingHistory.js";
 import Footer from "./Components/Footer.js";
+import IncidentReportingPage from "./Pages/IncidentReportingPage.js";
+import ReportSuccessPage from "./Pages/ReportSuccessPage.js";
+import ReportSavedPage from "./Pages/ReportSavedPage.js";
 
 function App() {
   return (
@@ -39,6 +42,9 @@ function App() {
           <Route path="/history" element={<SATTrainingHistory />} />
           <Route path="/PolicyManagement" element={<PolicyManagementPage />} /> 
           <Route path="/user" element={<UserPoliciesPage />} />
+          <Route path="/incident" element={<IncidentReportingPage />} />
+          <Route path="/success" element={<ReportSuccessPage />} />
+          <Route path="/reportsaved" element={<ReportSavedPage />} />
         </Routes>
       </div>
 

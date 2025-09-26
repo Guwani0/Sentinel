@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 const authRoutes = require("./Routes/authRoutes");
 const path = require("path"); //nethupul
 const bodyParser = require("body-parser"); //nethupul
+const incidentRoutes = require("./Routes/incidentRoutes");
 
 dotenv.config();
 const app = express();
@@ -18,6 +19,7 @@ app.use(bodyParser.json());
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 const policyRoutes = require("./Routes/policies");
 app.use("/api/policies", policyRoutes);
+app.use("/api/incidents", incidentRoutes);
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URI, {
