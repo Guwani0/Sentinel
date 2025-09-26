@@ -12,7 +12,9 @@ import SATPPVideos from "./Pages/SATPPVideos";
 import SATPPInfographics from "./Pages/SATPPInfographics";
 import SATPPSlides from "./Pages/SATPPSlides";
 import SATPPQuizInfo from "./Pages/SATPPQuizInfo"; 
-import SATPPQuiz from "./Pages/SATPPQuiz"; 
+import SATPPQuiz from "./Pages/SATPPQuiz";
+import PolicyManagementPage from "./Pages/PolicyManagementPage"; //nethupul
+import UserPoliciesPage from "./Pages/UserPoliciesPage"; //nethupul
 
 function App() {
   return (
@@ -30,6 +32,8 @@ function App() {
       <Route path="/satpp/slides" element={<SATPPSlides />} />
       <Route path="/satpp/quiz" element={<SATPPQuizInfo />} /> 
       <Route path="/satpp/quiz/start" element={<SATPPQuiz />} /> 
+      <Route path="/PolicyManagement" element={<PolicyManagementPage />} /> 
+      <Route path="/user" element={<UserPoliciesPage />} />
     </Routes>
   );
 }
