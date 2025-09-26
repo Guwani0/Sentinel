@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import jsPDF from "jspdf";
+import logo from "../assets/logo.png";
 
 function SATPPQuiz() {
   const questions = [
@@ -117,78 +118,129 @@ function SATPPQuiz() {
     setSubmitted(true);
   };
 
-  // ✅ Certificate Generator
-  const generateCertificate = () => {
-  const doc = new jsPDF("landscape");
+// ✅ Certificate Generator (White with Neon Purple Border + Gold Accents)
+const generateCertificate = (userName, moduleName, score) => {
+  const doc = new jsPDF("landscape", "pt", "a4");
   const pageWidth = doc.internal.pageSize.getWidth();
   const pageHeight = doc.internal.pageSize.getHeight();
 
-  // Colors
-  const purple = "#711bb5"; // Sentinel purple
+  //const purple = "#711bb5"; // Sentinel Purple
+  const neonLight = "#bb86fc"; // Light purple glow
+  const gold = "#d4af37";   // Gold
+  const black = "#000000";
 
-  // Background (white, clean look)
-  doc.setFillColor(255, 255, 255);
+  // ====== Neon Border Effect ======
+  const borderThickness = 25;
+
+  // Outer glow (lighter purple, semi-transparent)
+  doc.setFillColor(neonLight);
+  doc.setDrawColor(neonLight);
+  doc.setGState(new doc.GState({ opacity: 0.3 }));
   doc.rect(0, 0, pageWidth, pageHeight, "F");
 
-  // Top purple accent bar
-  doc.setFillColor(purple);
-  doc.rect(0, 0, pageWidth, 20, "F");
+  // Middle glow
+  doc.setFillColor("#3a0044");
+  doc.setDrawColor("#3a0044");
+  doc.setGState(new doc.GState({ opacity: 0.6 }));
+  doc.rect(10, 10, pageWidth - 20, pageHeight - 20, "F");
 
-  // Certificate Title
+  // Solid inner border
+  doc.setFillColor("#3a0044");
+  doc.setDrawColor("#3a0044");
+  doc.setGState(new doc.GState({ opacity: 1 }));
+  doc.rect(0, 0, pageWidth, pageHeight, "S");
+
+  // ====== Inner White Rectangle (certificate area) ======
+  doc.setFillColor(255, 255, 255);
+  doc.rect(borderThickness, borderThickness, pageWidth - borderThickness * 2, pageHeight - borderThickness * 2, "F");
+
+  // ====== Decorative Border Corners (Gold) ======
+  doc.setDrawColor(gold);
+  doc.setLineWidth(3);
+
+  // Top-left
+  doc.line(borderThickness + 20, borderThickness + 20, borderThickness + 80, borderThickness + 20);
+  doc.line(borderThickness + 20, borderThickness + 20, borderThickness + 20, borderThickness + 80);
+
+  // Top-right
+  doc.line(pageWidth - borderThickness - 80, borderThickness + 20, pageWidth - borderThickness - 20, borderThickness + 20);
+  doc.line(pageWidth - borderThickness - 20, borderThickness + 20, pageWidth - borderThickness - 20, borderThickness + 80);
+
+  // Bottom-left
+  doc.line(borderThickness + 20, pageHeight - borderThickness - 20, borderThickness + 80, pageHeight - borderThickness - 20);
+  doc.line(borderThickness + 20, pageHeight - borderThickness - 20, borderThickness + 20, pageHeight - borderThickness - 80);
+
+  // Bottom-right
+  doc.line(pageWidth - borderThickness - 80, pageHeight - borderThickness - 20, pageWidth - borderThickness - 20, pageHeight - borderThickness - 20);
+  doc.line(pageWidth - borderThickness - 20, pageHeight - borderThickness - 20, pageWidth - borderThickness - 20, pageHeight - borderThickness - 80);
+
+  // ====== Title ======
   doc.setFont("helvetica", "bold");
   doc.setFontSize(26);
-  doc.setTextColor(purple);
-  doc.text("Certificate of Completion", pageWidth / 2, 50, { align: "center" });
+  doc.setTextColor(gold);
+  doc.text("CERTIFICATE OF PARTICIPATION", pageWidth / 2, 140, { align: "center" });
+
+  // Divider
+  doc.setDrawColor(black);
+  doc.setLineWidth(0.5);
+  doc.line(pageWidth / 2 - 100, 155, pageWidth / 2 + 100, 155);
 
   // Subtitle
   doc.setFont("helvetica", "normal");
-  doc.setFontSize(16);
-  doc.setTextColor(0, 0, 0);
-  doc.text("This certifies that", pageWidth / 2, 70, { align: "center" });
-
-  // Recipient Name
-  const userName = "Sergeant Fernando"; // 🔥 Updated Name
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(22);
-  doc.setTextColor(purple);
-  doc.text(userName, pageWidth / 2, 90, { align: "center" });
-
-  // Completion Text
-  doc.setFont("helvetica", "normal");
   doc.setFontSize(14);
   doc.setTextColor(0, 0, 0);
-  doc.text(
-    "has successfully completed the training module",
-    pageWidth / 2,
-    105,
-    { align: "center" }
-  );
+  doc.text("This is to certify that", pageWidth / 2, 190, { align: "center" });
+
+  // Recipient Name
+  doc.setFont("times", "italic");
+  doc.setFontSize(28);
+  doc.setTextColor(0, 0, 0);
+  doc.text(String(userName), pageWidth / 2, 230, { align: "center" });
+
+  // Description
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(13);
+  doc.setTextColor(80, 80, 80);
+  doc.text("has successfully completed the training module", pageWidth / 2, 260, { align: "center" });
 
   // Module Name
   doc.setFont("helvetica", "bold");
-  doc.setFontSize(18);
-  doc.setTextColor(purple);
-  doc.text("Access Control & Password Policy", pageWidth / 2, 120, {
-    align: "center",
-  });
+  doc.setFontSize(16);
+  doc.setTextColor(black);
+  doc.text(String(moduleName), pageWidth / 2, 290, { align: "center" });
 
-  // Final Score
+  // Score
   doc.setFont("helvetica", "normal");
-  doc.setFontSize(14);
-  doc.setTextColor(0, 0, 0);
-  doc.text(`Final Score: ${score}%`, pageWidth / 2, 135, { align: "center" });
-
-  // Footer
   doc.setFontSize(12);
-  doc.setTextColor(100, 100, 100);
-  doc.text("Sentinel Training Platform", 30, pageHeight - 20);
-  doc.text(new Date().toLocaleDateString(), pageWidth - 30, pageHeight - 20, {
-    align: "right",
-  });
+  doc.setTextColor(50, 50, 50);
+  doc.text(`Final Score: ${String(score)}%`, pageWidth / 2, 315, { align: "center" });
 
-  // Save PDF
+  // ====== Date + Signature ======
+  const today = new Date().toLocaleDateString();
+  doc.setFontSize(12);
+  doc.setTextColor(0, 0, 0);
+
+  // Date
+  doc.text("DATE", pageWidth / 4, pageHeight - 100, { align: "center" });
+  doc.text(today, pageWidth / 4, pageHeight - 80, { align: "center" });
+
+// "SIGNATURE" label
+// Add logo
+// (x, y, width, height)
+doc.addImage(logo, "PNG", (3 * pageWidth) / 4 - 40, pageHeight - 172, 80, 72);
+
+// Platform text below logo
+doc.setFont("helvetica", "italic");
+doc.setFontSize(12);
+doc.setTextColor(0, 0, 0);
+doc.text("Sentinel - SL Army IT Division", (3 * pageWidth) / 4, pageHeight - 80, { align: "center" });
+
+  // Save
   doc.save("certificate.pdf");
 };
+
+
+
 
 
   if (submitted) {
@@ -225,11 +277,17 @@ function SATPPQuiz() {
           {score >= 80 ? (
             <>
               <button
-                onClick={generateCertificate}
-                className="px-6 py-2 bg-purple text-white rounded-lg hover:bg-[#6c009c]"
-              >
-                Download Certificate
-              </button>
+  onClick={() =>
+    generateCertificate(
+      "Sergeant Fernando", // or dynamic user from state
+      "Access Control & Password Policy",
+      score
+    )
+  }
+  className="px-6 py-2 bg-purple text-white rounded-lg hover:bg-[#6c009c]"
+>
+  Download Certificate
+</button>
               <button
                 onClick={() => window.location.href = "/satdashboard"}
                 className="px-6 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600"
