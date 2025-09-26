@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import Home from "./Pages/Home.js";
 import Login from "./Pages/Login.js";
 import Admin from "./Pages/Admin.js";
@@ -20,8 +20,20 @@ import Footer from "./Components/Footer.js";
 import IncidentReportingPage from "./Pages/IncidentReportingPage.js";
 import ReportSuccessPage from "./Pages/ReportSuccessPage.js";
 import ReportSavedPage from "./Pages/ReportSavedPage.js";
+import Navbar from "./Components/Navbar"; //nomasha
+import logo from "./assets/logo.png";  //nomasha
+import CTD from "./Pages/CTD"; //nomasha
+import CTDPolicyAck from "./Pages/CTDPolicyAck"; //nomasha
+import CTDTraining from "./Pages/CTDTraining"; //nomasha
+import CTDIncSevere from "./Pages/CTDIncSevere"; //nomasha
+import CTDComTrend from "./Pages/CTDComTrend"; //nomasha
+import CTDCstmRpt from "./Pages/CTDCstmRpt"; //nomasha
+import CTDAuditLogs from "./Pages/CTDAuditLogs"; //nomasha
 
 function App() {
+  const navigate = useNavigate(); // ✅ navigation hook
+  const location = useLocation();
+
   return (
     <div className="flex flex-col min-h-screen">
       <div className="flex-1">
@@ -45,13 +57,19 @@ function App() {
           <Route path="/incident" element={<IncidentReportingPage />} />
           <Route path="/success" element={<ReportSuccessPage />} />
           <Route path="/reportsaved" element={<ReportSavedPage />} />
+          {/* Nomasha */}
+          <Route path="/dashboard" element={<CTD />} />
+          <Route path="/ctd/policy-ack" element={<CTDPolicyAck />} />
+          <Route path="/ctd/training-stats" element={<CTDTraining />} />
+          <Route path="/ctd/incident-severity" element={<CTDIncSevere />} />
+          <Route path="/ctd/compliance-trend" element={<CTDComTrend />} />
+          <Route path="/ctd/custom-report" element={<CTDCstmRpt />} />
+          <Route path="/ctd/audit-logs" element={<CTDAuditLogs />} />
+          {/* Dev-only admin preview route (no nav link) */}
+          <Route path="/ctd" element={<CTD />} />
         </Routes>
       </div>
-
-      {/* ✅ Footer on every page */}
-      <Footer />
     </div>
   );
 }
-
 export default App;
