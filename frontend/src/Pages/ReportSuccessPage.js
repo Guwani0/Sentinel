@@ -7,7 +7,9 @@ export default function ReportSuccessPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const incidentId = location.state?.incidentId || "INC-20250923-67247";
-  const submittedAt = "2025-09-23T16:21:24";
+  // ✅ CHANGED: get submission time from navigate state or fallback to now
+const submittedAt = location.state?.submittedAt || new Date().toISOString();
+
 
   const handleCopy = () => {
     navigator.clipboard.writeText(incidentId);
@@ -46,7 +48,7 @@ export default function ReportSuccessPage() {
           <div style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: 16 }}>
             <button style={buttonStyle} onClick={() => navigate("/incident")}>Submit Another Report</button>
             <button style={buttonStyle} onClick={() => navigate("/incident", { state: { formData: location.state?.formData || {} } })}>Edit Your Report</button>
-            <button style={buttonStyle} onClick={() => navigate("/")}>Go to Home page</button>
+            <button style={buttonStyle} onClick={() => navigate("/")}>Go to Profile</button>
           </div>
         </div>
       </main>

@@ -14,6 +14,9 @@ const incidentSchema = new mongoose.Schema({
   actionsTaken: [String],
   anonymous: { type: Boolean, default: false },
   files: [String], // file paths or URLs
-});
+  status: { type: String, enum: ["Unsolved", "Solved"], default: "Unsolved" }
+  
+},{ timestamps: true });
+
 
 module.exports = mongoose.model("Incident", incidentSchema);

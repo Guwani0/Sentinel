@@ -4,6 +4,7 @@ import logo from "../assets/logo.png";
 import jsPDF from "jspdf";
 
 
+
 // Reusable MultiCheckbox component
 const MultiCheckbox = ({ label, options, selectedValues, onChange }) => (
   <div style={{ marginBottom: 12 }}>
@@ -27,6 +28,8 @@ export default function IncidentReportingPage() {
   const navigate = useNavigate();
   const location = useLocation(); // NEW: get previous state
   const prefillData = location.state?.formData;
+  const formData = location.state?.formData || {};
+
 
    const [form, setForm] = useState({
     reporterName: prefillData?.reporterName || "",
@@ -41,6 +44,7 @@ export default function IncidentReportingPage() {
     severity: prefillData?.severity || "Medium",
     actionsTaken: prefillData?.actionsTaken || [],
     anonymous: prefillData?.anonymous || false,
+    incidentId: prefillData?.incidentId || undefined
   });
 
   const [files, setFiles] = useState([]);
@@ -167,6 +171,8 @@ const handleSubmit = async (ev) => {
       files.forEach(file => formData.append("files", file));
     }
 
+    if (form.incidentId) formData.append("incidentId", form.incidentId);
+
     console.log("Sending POST request with FormData...");
 
     const response = await fetch("http://localhost:5000/api/incidents", {
@@ -189,9 +195,19 @@ const handleSubmit = async (ev) => {
       console.error("No incidentId received from server:", data);
       return;
     }
+    
 
     // ✅ Navigate immediately — do NOT block submit
-    navigate("/success", { state: { incidentId: data.incidentId, formData: form } });
+    // ✅ CHANGED: Pass submittedAt timestamp
+const submissionTime = new Date().toISOString(); // ✅ CHANGED
+navigate("/success", { 
+  state: { 
+    incidentId: data.incidentId, 
+    formData: form,
+    submittedAt: submissionTime // ✅ CHANGED
+  } 
+});
+
 
     // ✅ Generate PDF asynchronously (do not block navigation)
     setTimeout(() => {
@@ -248,14 +264,6 @@ const handleSubmit = async (ev) => {
   }
 };
 
-
-
-
-
-
-
-
-
   return (
     <div style={{ minHeight: "100vh", fontFamily: 'inter', background: `linear-gradient(135deg, ${COLORS.darkBase}, ${COLORS.cardEnd})`, position: "relative", color: COLORS.text }}>
       <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", backgroundColor: "rgba(0,0,0,0.65)", zIndex: 0 }} />
@@ -269,7 +277,7 @@ const handleSubmit = async (ev) => {
           </div>
         </div>
 
-        <form onSubmit={handleSubmit} style={{ display: "grid", gridTemplateColumns: "1fr 360px", gap: 20 }}>
+        <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 20 }}>
           {/* LEFT COLUMN */}
           <div style={{ padding: 18, borderRadius: 12, background: `linear-gradient(180deg, ${COLORS.cardStart}, ${COLORS.cardEnd})`, boxShadow: "0 8px 30px rgba(0,0,0,0.6)", transition: "transform 0.2s" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -345,7 +353,7 @@ const handleSubmit = async (ev) => {
 
             {/* Submit Report + Privacy & Security */}
             <div style={{ padding: 18, borderRadius: 12, fontSize: 15, background: `linear-gradient(180deg, ${COLORS.cardStart}, ${COLORS.cardEnd})`, boxShadow: "0 8px 30px rgba(0,0,0,0.6)" }}>
-              <button type="submit" disabled={Object.keys(errors).length > 0} style={{ width: "100%", padding: "12px 16px", borderRadius: 10, border: "none", background: COLORS.mainPurple, color: COLORS.text, fontSize: 18, fontFamily: 'inter', marginBottom: 12, cursor: "pointer", opacity: Object.keys(errors).length > 0 ? 0.6 : 1, transition: "all 0.3s ease" }} onMouseEnter={e => (e.currentTarget.style.boxShadow = "0 0 12px #711bb5, 0 0 25px rgba(113,27,181,0.7)")} onMouseLeave={e => (e.currentTarget.style.boxShadow = "none")}>Submit Report</button>
+              
               <div style={{ fontSize: 16, opacity: 0.85, fontFamily: 'inter' }}>
                 <strong>Privacy & Security</strong>
                 <p style={{ margin: "6px 0 0", fontSize: 15, fontFamily: 'inter' }}>Do not include passwords or authentication tokens in the description or attachments. Files are scanned and stored securely.</p>
@@ -359,8 +367,33 @@ const handleSubmit = async (ev) => {
                 <p style={{ margin: "6px 0 0", fontSize: 15, fontFamily: 'inter' }}>After submission you will receive an Incident ID to follow up (if you provided contact details).</p>
               </div>
             </div>
+            <div style={{ display: "flex", justifyContent: "center", marginTop: 20 }}>
+  <button 
+    type="submit" 
+    disabled={Object.keys(errors).length > 0}
+    style={{
+      padding: "12px 40px",  // 👈 wider padding instead of full width
+      borderRadius: 10,
+      border: "none",
+      background: COLORS.mainPurple,
+      color: COLORS.text,
+      fontSize: 18,
+      fontFamily: "inter",
+      cursor: "pointer",
+      opacity: Object.keys(errors).length > 0 ? 0.6 : 1,
+      transition: "all 0.3s ease"
+    }}
+    onMouseEnter={e => (e.currentTarget.style.boxShadow = "0 0 12px #711bb5, 0 0 25px rgba(113,27,181,0.7)")}
+    onMouseLeave={e => (e.currentTarget.style.boxShadow = "none")}
+  >
+    Submit Report
+  </button>
+</div>
+
           </aside>
         </form>
+
+        
 
         <div style={{ marginTop: 18, padding: 14, borderRadius: 10, background: "#06020a", opacity: 0.9 }}>
           <p style={{ margin: 0, fontSize: 16, fontFamily: 'inter' }}>If this is an active attack affecting multiple users or critical systems, please also call your SOC/IT immediately.</p>

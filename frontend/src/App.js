@@ -9,6 +9,8 @@ import SATDashboardPage from "./Pages/SATDashboard.js";
 import SATModulePage from "./Pages/SATModulePage";
 import IncidentReportingPage from "./Pages/IncidentReportingPage.js";
 import ReportSuccessPage from "./Pages/ReportSuccessPage.js";
+import ReportSavedPage from "./Pages/ReportSavedPage.js";
+
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
       <Route path="/satmodule" element={<SATModulePage />} />
       <Route path="/incident" element={<IncidentReportingPage />} />
       <Route path="/success" element={<ReportSuccessPage />} />
+      <Route path="/reportsaved" element={<ReportSavedPage />} />
+
     </Routes>
   );
 }
