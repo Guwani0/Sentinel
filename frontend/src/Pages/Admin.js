@@ -47,19 +47,19 @@ function Admin() {
               <ChartBarIcon className="h-5 w-5" /> Dashboard
             </button>
             <button
-              onClick={() => navigate("/compliance")}
+              onClick={() => navigate("/dashboard")}
               className="feature-btn w-full flex items-center gap-3 justify-center"
             >
               <ShieldCheckIcon className="h-5 w-5" /> Compliance Tracking
             </button>
             <button
-              onClick={() => navigate("/policy")}
+              onClick={() => navigate("/PolicyManagement")}
               className="feature-btn w-full flex items-center gap-3 justify-center"
             >
               <DocumentTextIcon className="h-5 w-5" /> Policy Management
             </button>
             <button
-              onClick={() => navigate("/incidents")}
+              onClick={() => navigate("/reportsaved")}
               className="feature-btn w-full flex items-center gap-3 justify-center"
             >
               <ExclamationTriangleIcon className="h-5 w-5" /> Incident Reporting
@@ -128,7 +128,7 @@ function Admin() {
           {/* Quick Navigation Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div
-              onClick={() => navigate("/compliance")}
+              onClick={() => navigate("/dashboard")}
               className="feature-btn cursor-pointer flex flex-col items-center p-6"
             >
               <ShieldCheckIcon className="h-10 w-10 mb-3" />
@@ -136,7 +136,7 @@ function Admin() {
               <p className="text-sm">Monitor compliance across units.</p>
             </div>
             <div
-              onClick={() => navigate("/policy")}
+              onClick={() => navigate("/PolicyManagement")}
               className="feature-btn cursor-pointer flex flex-col items-center p-6"
             >
               <DocumentTextIcon className="h-10 w-10 mb-3" />
@@ -144,7 +144,7 @@ function Admin() {
               <p className="text-sm">Publish and manage IT policies.</p>
             </div>
             <div
-              onClick={() => navigate("/incidents")}
+              onClick={() => navigate("/reportsaved")}
               className="feature-btn cursor-pointer flex flex-col items-center p-6"
             >
               <ExclamationTriangleIcon className="h-10 w-10 mb-3" />

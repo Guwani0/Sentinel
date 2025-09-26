@@ -33,17 +33,16 @@ const submittedAt = location.state?.submittedAt || new Date().toISOString();
       <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", backgroundColor: "rgba(0,0,0,0.65)", zIndex: 0 }} />
       <main style={{ position: "relative", zIndex: 1, padding: "28px 48px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "80vh" }}>
         <div style={{ display: "flex", gap: 20, alignItems: "center", marginBottom: 18 }}>
-          <img src={logo} alt="Sentinel" style={{ height: 58 }} />
-          <h1 style={{ margin: 0, fontSize: 30 }}><span style={{ color: COLORS.mainPurple }}>Incident Reporting</span> Portal</h1>
+          <h1 className="text-5xl font-bold mb-6 text-purple-400 text-left mt-7"> Incident Report</h1>
         </div>
         <div style={{ padding: 24, borderRadius: 12,  background: `linear-gradient(90deg, ${COLORS.cardStart}, ${COLORS.cardEnd})`, boxShadow: "0 6px 20px rgba(0,0,0,0.6)", maxWidth: 600, width: "100%", textAlign: "center" }}>
-          <h2 style={{ marginTop: 0 }}>Your report has been submitted</h2>
+          <h2 style={{ marginTop: 0 }} className="text-2xl text-green-500">Your report has been submitted! </h2> <br/>
           <p>Incident ID: <strong>{incidentId}</strong>{" "}
             <button onClick={handleCopy} style={{ marginLeft: 8, padding: "4px 10px", borderRadius: 6, border: "none", background: copied ? "green" : COLORS.mainPurple, color: COLORS.text, cursor: "pointer" }}>
               {copied ? "Copied!" : "Copy"}
             </button>
-          </p>
-          <p>Submitted at: {new Date(submittedAt).toLocaleString()}</p>
+          </p> 
+          <p>Submitted at: {new Date(submittedAt).toLocaleString()}</p> <br/>
           <p style={{ opacity: 0.9, marginBottom: 20 }}>A security analyst will review this and contact you if more information is required.</p>
           <div style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: 16 }}>
             <button style={buttonStyle} onClick={() => navigate("/incident")}>Submit Another Report</button>
@@ -52,9 +51,7 @@ const submittedAt = location.state?.submittedAt || new Date().toISOString();
           </div>
         </div>
       </main>
-      <footer style={{ textAlign: "center", padding: 18, background: COLORS.darkBase, opacity: 0.9, marginTop: 30, color: COLORS.text }}>
-        <p style={{ margin: 0 }}>© 2025 Sentinel | Sri Lanka Army IT Department</p>
-      </footer>
+
       <style>{`
         html, body, #root {
           margin: 0;

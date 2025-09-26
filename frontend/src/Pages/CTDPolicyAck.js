@@ -1,10 +1,21 @@
 import React, { useMemo } from 'react';
-import { ResponsiveContainer, PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
+import {
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  CartesianGrid,
+} from 'recharts';
+import Header from "../Components/Header"; // ✅ Added header
 
 export default function CTDPolicyAck() {
   // sample weekly data for the bar chart (acknowledged vs pending)
   const weekly = [
-    // non-monotonic distribution (up/down across weeks for realism)
     { week: 'Week 1', acknowledged: 210, pending: 30 },
     { week: 'Week 2', acknowledged: 145, pending: 50 },
     { week: 'Week 3', acknowledged: 260, pending: 22 },
@@ -29,11 +40,10 @@ export default function CTDPolicyAck() {
 
   const pct = totals.total > 0 ? Math.round((totals.acknowledged / totals.total) * 100) : 0;
 
-  // custom tooltip for donut: shows counts when hovering slices
+  // custom tooltip for donut
   const DonutTooltip = ({ active, payload }) => {
     if (!active || !payload || !payload.length) return null;
     const item = payload[0];
-    // item.name is either 'Acknowledged' or 'Pending'
     const value = item.value;
     const percent = totals.total > 0 ? Math.round((value / totals.total) * 100) : 0;
     const label = `${value} of ${totals.total} users`;
@@ -48,12 +58,39 @@ export default function CTDPolicyAck() {
 
   return (
     <div style={{ padding: 30, minHeight: '100vh', background: '#000' }}>
-      <h2 style={{ color: '#a78bfa', margin: '10px 0 20px 0' }}>Policy Acknowledgement Rate</h2>
+      {/* ✅ Global Header */}
+      <Header user={{ username: "Admin", role: "admin" }} /> <br />
 
-  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 20, maxWidth: 1100, margin: '0 auto 18px auto', alignItems: 'stretch', paddingBottom: 12 }}>
+      <h2 className="text-5xl font-bold mb-6 text-purple-400 text-left">
+        Policy Acknowledgement Rate
+      </h2>
+
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+          gap: 20,
+          maxWidth: 1100,
+          margin: '0 auto 18px auto',
+          alignItems: 'stretch',
+          paddingBottom: 12,
+        }}
+      >
         {/* Left: Completed vs Pending (last 6 weeks) */}
-  <div style={{ background: 'linear-gradient(180deg,#0b0410 0%, #2a0033 100%)', borderRadius: 12, padding: 18, boxShadow: '0 6px 20px rgba(113,27,181,0.35)', display: 'flex', flexDirection: 'column', height: '100%' }}>
-          <div style={{ color: '#fff', fontWeight: 700, marginBottom: 8 }}>Completed vs Pending (last 6 weeks)</div>
+        <div
+          style={{
+            background: 'linear-gradient(180deg,#0b0410 0%, #2a0033 100%)',
+            borderRadius: 12,
+            padding: 18,
+            boxShadow: '0 6px 20px rgba(113,27,181,0.35)',
+            display: 'flex',
+            flexDirection: 'column',
+            height: '100%',
+          }}
+        >
+          <div style={{ color: '#fff', fontWeight: 700, marginBottom: 8 }}>
+            Completed vs Pending (last 6 weeks)
+          </div>
           <div style={{ width: '100%', height: 300, minHeight: 300 }}>
             <ResponsiveContainer>
               <BarChart data={weekly} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
@@ -69,7 +106,19 @@ export default function CTDPolicyAck() {
         </div>
 
         {/* Right: Overall Completion donut */}
-  <div style={{ background: 'linear-gradient(180deg,#0b0410 0%, #2a0033 100%)', borderRadius: 12, padding: 18, boxShadow: '0 6px 20px rgba(113,27,181,0.35)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
+        <div
+          style={{
+            background: 'linear-gradient(180deg,#0b0410 0%, #2a0033 100%)',
+            borderRadius: 12,
+            padding: 18,
+            boxShadow: '0 6px 20px rgba(113,27,181,0.35)',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: '100%',
+          }}
+        >
           <div style={{ color: '#fff', fontWeight: 700, marginBottom: 8 }}>Overall Completion</div>
           <div style={{ width: 260, height: 260, minWidth: 200, minHeight: 200 }}>
             <ResponsiveContainer>
@@ -87,20 +136,37 @@ export default function CTDPolicyAck() {
           <div style={{ textAlign: 'center', marginTop: 12, color: '#fff', fontSize: 20, fontWeight: 700 }}>
             {pct}% Completed
           </div>
-          {/* Totals are shown in the donut tooltip on hover — improves visual cleanliness */}
         </div>
       </div>
-  {/* Export buttons removed per request */}
-      
 
-      
-
-      {/* Pending users / group counts under the charts */}
-  <div style={{ maxWidth: 1100, marginTop: 36, display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 20, margin: '36px auto 0', alignItems: 'stretch' }}>
+      {/* Pending users / group counts */}
+      <div
+        style={{
+          maxWidth: 1100,
+          marginTop: 36,
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          gap: 20,
+          margin: '36px auto 0',
+          alignItems: 'stretch',
+        }}
+      >
         {/* Left: Top 5 users pending table */}
-  <div style={{ background: 'linear-gradient(180deg,#0b0410 0%, #2a0033 100%)', borderRadius: 12, padding: 14, color: '#fff', boxShadow: '0 6px 20px rgba(113,27,181,0.15)', display: 'flex', flexDirection: 'column', height: '100%', minHeight: 180, overflow: 'hidden' }}>
+        <div
+          style={{
+            background: 'linear-gradient(180deg,#0b0410 0%, #2a0033 100%)',
+            borderRadius: 12,
+            padding: 14,
+            color: '#fff',
+            boxShadow: '0 6px 20px rgba(113,27,181,0.15)',
+            display: 'flex',
+            flexDirection: 'column',
+            height: '100%',
+            minHeight: 180,
+            overflow: 'hidden',
+          }}
+        >
           <div style={{ fontWeight: 700, marginBottom: 8 }}>Top 5 users not yet acknowledged</div>
-          {/* sample pending users - replace with backend data when available */}
           <table style={{ width: '100%', borderCollapse: 'collapse', color: '#e6e6e6' }}>
             <thead>
               <tr style={{ textAlign: 'left', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
@@ -119,7 +185,9 @@ export default function CTDPolicyAck() {
               ))}
               {samplePendingUsers.length === 0 && (
                 <tr>
-                  <td colSpan={3} style={{ padding: 12, color: '#999' }}>No pending users</td>
+                  <td colSpan={3} style={{ padding: 12, color: '#999' }}>
+                    No pending users
+                  </td>
                 </tr>
               )}
             </tbody>
@@ -127,11 +195,33 @@ export default function CTDPolicyAck() {
         </div>
 
         {/* Right: Group counts summary */}
-  <div style={{ background: 'linear-gradient(180deg,#0b0410 0%, #2a0033 100%)', borderRadius: 12, padding: 16, color: '#fff', boxShadow: '0 6px 20px rgba(113,27,181,0.15)', display: 'flex', flexDirection: 'column', height: '100%', minHeight: 140, overflow: 'hidden' }}>
+        <div
+          style={{
+            background: 'linear-gradient(180deg,#0b0410 0%, #2a0033 100%)',
+            borderRadius: 12,
+            padding: 16,
+            color: '#fff',
+            boxShadow: '0 6px 20px rgba(113,27,181,0.15)',
+            display: 'flex',
+            flexDirection: 'column',
+            height: '100%',
+            minHeight: 140,
+            overflow: 'hidden',
+          }}
+        >
           <div style={{ fontWeight: 700, marginBottom: 8 }}>Pending by group</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             {sampleGroupCounts.map((g, idx) => (
-              <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 10px', background: 'rgba(255,255,255,0.02)', borderRadius: 8 }}>
+              <div
+                key={idx}
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  padding: '8px 10px',
+                  background: 'rgba(255,255,255,0.02)',
+                  borderRadius: 8,
+                }}
+              >
                 <div style={{ color: '#e6e6e6' }}>{g.role}</div>
                 <div style={{ color: '#ffb22b', fontWeight: 700 }}>{g.pending}</div>
               </div>
@@ -143,16 +233,15 @@ export default function CTDPolicyAck() {
   );
 }
 
-// sample data used for table and groups; replace with API data when wired
+// sample data
 const samplePendingUsers = [
-  { name: 'Alice Thompson', role: 'Manager', pendingSince: '2025-09-02' },
-  { name: 'Bob Martin', role: 'Employee', pendingSince: '2025-09-05' },
-  { name: 'Carla Ruiz', role: 'Employee', pendingSince: '2025-09-07' },
-  { name: 'Daniel Kim', role: 'Manager', pendingSince: '2025-09-09' },
-  { name: 'Eve Park', role: 'Employee', pendingSince: '2025-09-11' },
-  { name: 'Frank Li', role: 'Contractor', pendingSince: '2025-09-12' },
+  { name: 'Capt. Nuwan Perera', role: 'Manager', pendingSince: '2025-09-02' },
+  { name: 'Sgt. Malith Fernando', role: 'Employee', pendingSince: '2025-09-05' },
+  { name: 'Cpl. Tharindu Jayasinghe', role: 'Employee', pendingSince: '2025-09-07' },
+  { name: 'Lt. Col. Anura Senanayake', role: 'Manager', pendingSince: '2025-09-09' },
+  { name: 'Pvt. Kavindu Rajapaksha', role: 'Employee', pendingSince: '2025-09-11' },
+  { name: 'WO. Sivalingam Arulanantham', role: 'Contractor', pendingSince: '2025-09-12' },
 ];
-
 const sampleGroupCounts = [
   { role: 'Managers', pending: 50 },
   { role: 'Employees', pending: 110 },

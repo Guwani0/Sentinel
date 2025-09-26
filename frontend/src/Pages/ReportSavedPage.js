@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
+import Header from "../Components/Header"; 
 
 export default function ReportSavedPage() {
   const [incidents, setIncidents] = useState([]);
@@ -102,11 +103,10 @@ export default function ReportSavedPage() {
       }}
     >
       {/* Header */}
+      <Header />
       <div style={{ display: "flex", alignItems: "center", gap: 20, marginBottom: 25 }}>
-        <img src={logo} alt="Sentinel" style={{ height: 58 }} />
         <div>
-          <h1 style={{ margin: 0, fontSize: 28, fontFamily: "Poppins, sans-serif" }}>
-            <span style={{ color: COLORS.mainPurple }}>Incident</span> – Reports
+          <h1 className="text-4xl font-bold text-purple-400 mb-4 mt-7"> Reported Incidents
           </h1>
           <p style={{ margin: "6px 0 0", opacity: 0.8, fontSize: 16, fontWeight: 100 }}>
             Review, filter, and manage all submitted incidents.
@@ -115,16 +115,16 @@ export default function ReportSavedPage() {
       </div>
 
       {/* Filters */}
-      <div
-        style={{
-          display: "flex",
-          gap: 20,
-          marginBottom: 20,
-          background: `linear-gradient(180deg, ${COLORS.cardStart}, ${COLORS.cardEnd})`,
-          padding: 16,
-          borderRadius: 12,
-        }}
-      >
+     <div
+  style={{
+    display: "flex",
+    gap: 20,
+    marginBottom: 20,
+    background: "#371f37ff", // Tailwind's gray-800
+    padding: 16,
+    borderRadius: 12,
+  }}
+>
         <select
           value={filter.type}
           onChange={(e) => setFilter({ ...filter, type: e.target.value })}

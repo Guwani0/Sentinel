@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef, useMemo } from 'react';
 import { FaHistory, FaRegCalendarAlt } from 'react-icons/fa';
+import Header from "../Components/Header";
 
 const API_BASE = process.env.REACT_APP_API_BASE || 'http://localhost:5000/api';
 
@@ -277,7 +278,7 @@ const CTDAuditLogs = () => {
 
   // Theme helpers
   const cardStyle = {
-    background: 'linear-gradient(180deg, rgba(22,8,52,0.95), rgba(9,4,20,0.72))',
+    background: 'linear-gradient(180deg,#0b0410 0%, #2a0033 100%)',
     padding: 22,
     borderRadius: 12,
     border: '1px solid rgba(124,58,237,0.12)',
@@ -292,7 +293,7 @@ const CTDAuditLogs = () => {
     border: '1px solid rgba(255,255,255,0.06)',
     minWidth: 140,
     transition: 'box-shadow 150ms ease, transform 120ms ease',
-    boxShadow: '0 6px 18px rgba(11,7,23,0.45)'
+    boxShadow: '0 6px 18px rgba(124,58,237,0.25)' 
   };
 
   // button styles (reused)
@@ -320,8 +321,10 @@ const CTDAuditLogs = () => {
 
   return (
     <div style={{ padding: 28 }}>
+       {/* ✅ Global Header */}
+      <Header user={{ username: "Admin", role: "admin" }} /> <br />
       <div style={{ display: 'flex', alignItems: 'center', gap: 18, marginBottom: 16 }}>
-        <h2 style={{ color: '#a78bfa', fontFamily: 'Poppins, sans-serif', margin: 0 }}>Audit Logs</h2>
+        <h2 className="text-5xl font-bold mb-6 text-purple-400 text-left">Audit Logs</h2>
       </div>
 
       {/* Filters card */}

@@ -1,5 +1,17 @@
 import React from 'react';
-import { ResponsiveContainer, PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from 'recharts';
+import {
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+} from 'recharts';
+import Header from "../Components/Header"; // ✅ Added Header
 
 export default function CTDIncSevere() {
   const pieData = [
@@ -10,7 +22,6 @@ export default function CTDIncSevere() {
   ];
 
   const barData = [
-    // made intentionally uneven to highlight spikes and dips
     { name: 'Jan', critical: 2, high: 5, medium: 12, low: 8 },
     { name: 'Feb', critical: 1, high: 8, medium: 20, low: 6 },
     { name: 'Mar', critical: 15, high: 40, medium: 90, low: 55 },
@@ -20,7 +31,6 @@ export default function CTDIncSevere() {
   ];
 
   const COLORS = ['#ef4444', '#f97316', '#f59e0b', '#60a5fa'];
-
   const total = pieData.reduce((s, p) => s + (p.value || 0), 0);
 
   const DonutTooltip = ({ active, payload }) => {
@@ -38,19 +48,16 @@ export default function CTDIncSevere() {
     );
   };
 
-  // root cause breakdown
   const rootCauses = [
     { name: 'Human Error', value: 40 },
     { name: 'System Failure', value: 30 },
     { name: 'External Attack', value: 20 },
     { name: 'Other', value: 10 },
   ];
-
   const ROOT_COLORS = ['#7c3aed', '#ef4444', '#f97316', '#94a3b8'];
 
-  // KPI mock values — in real app compute from API
   const avgResolutionDays = 2.3;
-  const pctWithinSLA = 85; // percent
+  const pctWithinSLA = 85;
   const openClosed = [
     { name: 'Open', value: 120 },
     { name: 'Closed', value: 580 },
@@ -59,11 +66,15 @@ export default function CTDIncSevere() {
 
   return (
     <div style={{ padding: 28, minHeight: '100vh', background: '#000', color: '#fff' }}>
-      <div style={{ maxWidth: 1100, margin: '0 auto' }}>
-  <h2 style={{ color: '#ffb86b', fontFamily: 'Poppins, sans-serif' }}>Incident Severity Breakdown</h2>
+      {/* ✅ Global Header */}
+      <Header user={{ username: "Admin", role: "admin" }} /> <br />
 
+      <h2 className="text-5xl font-bold mb-6 text-purple-400 text-left">
+        Incident Severity Breakdown
+      </h2>
+      <div style={{ maxWidth: 1100, margin: '0 auto' }}>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 420px', gap: 20, marginTop: 20 }}>
-          <div style={{ background: 'linear-gradient(180deg,#050507, #2b0520)', padding: 16, borderRadius: 10 }}>
+          <div style={{ background: 'linear-gradient(180deg,#0b0410 0%, #2a0033 100%)', padding: 16, borderRadius: 10 }}>
             <h4 style={{ color: '#fff' }}>Severity over time (stacked)</h4>
             <div style={{ width: '100%', height: 320 }}>
               <ResponsiveContainer>
@@ -81,7 +92,7 @@ export default function CTDIncSevere() {
             </div>
           </div>
 
-          <div style={{ background: 'linear-gradient(180deg,#050507, #2b0520)', padding: 16, borderRadius: 10, textAlign: 'center' }}>
+          <div style={{ background: 'linear-gradient(180deg,#0b0410 0%, #2a0033 100%)', padding: 16, borderRadius: 10, textAlign: 'center' }}>
             <h4 style={{ color: '#fff' }}>Current Distribution</h4>
             <div style={{ width: '100%', height: 260 }}>
               <ResponsiveContainer>
@@ -101,22 +112,23 @@ export default function CTDIncSevere() {
             </div>
           </div>
         </div>
+
         {/* KPI row */}
         <div style={{ maxWidth: 1100, margin: '20px auto 0' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 16 }}>
-            <div style={{ background: 'linear-gradient(180deg,#050507, #2b0520)', padding: 14, borderRadius: 10, color: '#fff', textAlign: 'center' }}>
+            <div style={{ background: 'linear-gradient(180deg,#0b0410 0%, #2a0033 100%)', padding: 14, borderRadius: 10, color: '#fff', textAlign: 'center' }}>
               <div style={{ fontSize: 12, color: '#9ca3af' }}>Avg Resolution Time</div>
               <div style={{ fontSize: 20, fontWeight: 700, marginTop: 6 }}>{avgResolutionDays} days</div>
               <div style={{ fontSize: 12, color: '#9ca3af', marginTop: 6 }}>Median of resolved incidents</div>
             </div>
 
-            <div style={{ background: 'linear-gradient(180deg,#050507, #2b0520)', padding: 14, borderRadius: 10, color: '#fff', textAlign: 'center' }}>
+            <div style={{ background: 'linear-gradient(180deg,#0b0410 0%, #2a0033 100%)', padding: 14, borderRadius: 10, color: '#fff', textAlign: 'center' }}>
               <div style={{ fontSize: 12, color: '#9ca3af' }}>% Resolved within SLA</div>
               <div style={{ fontSize: 20, fontWeight: 700, marginTop: 6 }}>{pctWithinSLA}%</div>
               <div style={{ fontSize: 12, color: '#9ca3af', marginTop: 6 }}>SLA: 7 days</div>
             </div>
 
-            <div style={{ background: 'linear-gradient(180deg,#050507, #2b0520)', padding: 12, borderRadius: 10, color: '#fff', display: 'flex', alignItems: 'center', gap: 12 }}>
+            <div style={{ background: 'linear-gradient(180deg,#0b0410 0%, #2a0033 100%)', padding: 12, borderRadius: 10, color: '#fff', display: 'flex', alignItems: 'center', gap: 12 }}>
               <div style={{ width: 120, height: 80 }}>
                 <ResponsiveContainer>
                   <PieChart>
@@ -131,15 +143,16 @@ export default function CTDIncSevere() {
               </div>
               <div style={{ color: '#e6e6e6' }}>
                 <div style={{ fontSize: 12, color: '#9ca3af' }}>Open vs Closed</div>
-                <div style={{ fontWeight: 700, marginTop: 6 }}>{openClosed[0].value} open</div>
-                <div style={{ color: '#9ca3af', marginTop: 4 }}>{openClosed[1].value} closed</div>
+                <div style={{ fontWeight: 700, marginTop: 6 }}>{openClosed[0].value} Open</div>
+                <div style={{ color: '#9ca3af', marginTop: 4 }}>{openClosed[1].value} Closed</div>
               </div>
             </div>
           </div>
         </div>
+
         {/* Root cause breakdown */}
         <div style={{ maxWidth: 1100, margin: '24px auto 0' }}>
-          <div style={{ background: 'linear-gradient(180deg,#050507, #2b0520)', padding: 16, borderRadius: 10 }}>
+          <div style={{ background: 'linear-gradient(180deg,#0b0410 0%, #2a0033 100%)', padding: 16, borderRadius: 10 }}>
             <h4 style={{ color: '#fff' }}>Root Cause Breakdown</h4>
             <div style={{ display: 'flex', gap: 18, alignItems: 'center', marginTop: 8, flexWrap: 'wrap' }}>
               <div style={{ width: 260, height: 220 }}>

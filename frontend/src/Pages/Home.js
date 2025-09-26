@@ -1,8 +1,11 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../Components/Navbar";
 import logo from "../assets/logo.png";
 
 function Home() {
+  const navigate = useNavigate();
+
   return (
     <div className="Home bg-black text-white">
       <Navbar />
@@ -38,7 +41,7 @@ function Home() {
             Manage policies, train users, track compliance, and report incidents
             — all in one place.
           </p>
-          <button type="button" className="neon-btn" aria-label="Get Started">
+          <button type="button" className="neon-btn" aria-label="Get Started" onClick={() => navigate("/login")}>
             Get Started
           </button>
         </div>

@@ -68,13 +68,13 @@ function Employee() {
               <ChartBarIcon className="h-5 w-5" /> Training History
             </button>
             <button
-              onClick={() => navigate("/policies")}
+              onClick={() => navigate("/user")}
               className="feature-btn w-full flex items-center gap-3"
             >
               <DocumentTextIcon className="h-5 w-5" /> Policies
             </button>
             <button
-              onClick={() => navigate("/incidents")}
+              onClick={() => navigate("/incident")}
               className="feature-btn w-full flex items-center gap-3"
             >
               <ExclamationTriangleIcon className="h-5 w-5" /> Incident Reporting
@@ -143,7 +143,7 @@ function Employee() {
               <p className="text-sm">Review your completion records.</p>
             </div>
             <div
-              onClick={() => navigate("/policies")}
+              onClick={() => navigate("/user")}
               className="feature-btn cursor-pointer flex flex-col items-center p-6"
             >
               <DocumentTextIcon className="h-10 w-10 mb-3" />
@@ -151,7 +151,7 @@ function Employee() {
               <p className="text-sm">View and acknowledge IT policies.</p>
             </div>
             <div
-              onClick={() => navigate("/incidents")}
+              onClick={() => navigate("/incident")}
               className="feature-btn cursor-pointer flex flex-col items-center p-6"
             >
               <ExclamationTriangleIcon className="h-10 w-10 mb-3" />
